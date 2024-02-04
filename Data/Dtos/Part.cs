@@ -2,7 +2,7 @@
 
 namespace Data.Dtos;
 
-public sealed record Part : BaseDto
+public record PartDtoSummary : BaseDto
 {
     public required string Type { get; set; } //TODO: make enum
     public required string Location { get; set; }
@@ -11,3 +11,5 @@ public sealed record Part : BaseDto
     public decimal? Size2 { get; set; }
     public string? Notes { get; set; }
 }
+
+public sealed record PartDto : PartDtoSummary { }
