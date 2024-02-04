@@ -1,8 +1,8 @@
-﻿using Data.Entities.Abstractions;
+﻿using Data.Dtos.Abstractions;
 
-namespace Data.Entities;
+namespace Data.Dtos;
 
-public sealed record Part : BaseEntity
+public sealed record Part : BaseDto
 {
     public required string Type { get; set; } //TODO: make enum
     public required string Location { get; set; }

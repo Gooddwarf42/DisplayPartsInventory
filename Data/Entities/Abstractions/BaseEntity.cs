@@ -1,6 +1,6 @@
 namespace Data.Entities.Abstractions;
 
-public record Entity : IEntity
+public record BaseEntity : IEntity
 {
     public int Id { get; set; }
 }
