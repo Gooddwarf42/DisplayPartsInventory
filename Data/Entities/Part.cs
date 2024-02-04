@@ -1,6 +1,8 @@
-﻿namespace Data.Entities;
+﻿using Data.Entities.Abstractions;
 
-public class Part
+namespace Data.Entities;
+
+public sealed record Part : Entity
 {
     public required string Type { get; set; } //TODO: make enum
     public required string Location { get; set; }
