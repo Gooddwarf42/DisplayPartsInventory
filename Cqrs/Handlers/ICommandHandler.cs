@@ -1,6 +1,7 @@
 using Cqrs.Operations;
 
 namespace Cqrs.Handlers;
+
 // TODO: this is still very much a draft!
 public interface ICommandHandler<TCommand, TResult> : IOperationHandler
     where TCommand : ICommand<TResult>

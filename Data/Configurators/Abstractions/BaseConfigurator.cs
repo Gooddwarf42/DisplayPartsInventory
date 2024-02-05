@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace Data.Configurators.Abstractions;
 
 public class BaseConfigurator<TEntity> : IEntityTypeConfiguration<TEntity>
-where TEntity : class, IEntity
+    where TEntity : class, IEntity
 {
     public void Configure(EntityTypeBuilder<TEntity> builder)
     {
         builder
-        .ToTable(nameof(TEntity))
-        .HasKey(e => e.Id);
+            .ToTable(nameof(TEntity))
+            .HasKey(e => e.Id);
 
         ConfigureEntity(builder);
     }

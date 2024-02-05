@@ -1,9 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace Data.Infrastructure
+namespace Data.Infrastructure;
+
+public interface IConfigureDbContext
 {
-    public interface IConfigureDbContext
-    {
-        public void OnDbContextConfiguring(DbContextOptionsBuilder optionsBuilder);
-    }
+    public void OnDbContextConfiguring(DbContextOptionsBuilder optionsBuilder);
 }
