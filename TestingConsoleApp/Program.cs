@@ -1,4 +1,4 @@
-﻿using Business.Mapper;
+﻿using Business.Mapper.Abstractions;
 using Data.Dtos;
 using Data.Entities;
 using Microsoft.Extensions.DependencyInjection;
