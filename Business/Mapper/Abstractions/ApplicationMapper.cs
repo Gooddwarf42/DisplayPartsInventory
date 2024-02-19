@@ -1,7 +1,5 @@
 using AutoMapper;
 using Business.Mapper.Configurators;
-using Data.Dtos;
-using Data.Entities;
 
 namespace Business.Mapper.Abstractions;
 

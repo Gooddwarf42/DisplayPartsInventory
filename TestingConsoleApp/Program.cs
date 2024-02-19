@@ -27,6 +27,8 @@ internal class Program
 
         var partDto = mapper.Map<PartDto>(part);
 
+        var partAgain = mapper.Map<Part>(partDto);
+
 
         Console.WriteLine("Goodbye, World!");
     }
