@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
-using Business.Mapper.Abstractions;
 using Business.Mapper.Abstractions.Configurators;
+using Business.Mapper.Abstractions.Extensions;
 using Data.Dtos;
 using Data.Entities;
 

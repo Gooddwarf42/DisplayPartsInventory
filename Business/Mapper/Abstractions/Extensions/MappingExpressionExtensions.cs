@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 using AutoMapper;
 
-namespace Business.Mapper.Abstractions;
+namespace Business.Mapper.Abstractions.Extensions;
 
 public static class MappingExpressionExtensions
 {

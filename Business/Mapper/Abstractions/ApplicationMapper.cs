@@ -1,23 +1,26 @@
 using AutoMapper;
-using Business.Mapper.Configurators;
+using Business.Mapper.Abstractions.Configurators;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Business.Mapper.Abstractions;
 
 public class ApplicationMapper : AutoMapper.Mapper
 {
-    public ApplicationMapper() : base(new ProvaConfigurationProvider())
+    public ApplicationMapper(IServiceProvider serviceProvider) : base(new ProvaConfigurationProvider(serviceProvider))
     {
     }
 
     private class ProvaConfigurationProvider : MapperConfiguration
     {
-        public ProvaConfigurationProvider() : base(cfg => ConfigureMapping(cfg)) { }
+        public ProvaConfigurationProvider(IServiceProvider serviceProvider) : base(cfg => ConfigureMapping(cfg, serviceProvider)) { }
 
-        private static void ConfigureMapping(IMapperConfigurationExpression cfg)
+        private static void ConfigureMapping(IMapperConfigurationExpression cfg, IServiceProvider serviceProvider)
         {
-            //Configure part
-            var testConfigurator = new PartMappingConfiguration();
-            testConfigurator.Configure(cfg);
+            var mappingConfigurators = serviceProvider.GetServices<IMappingConfiguration>();
+            foreach (var mappingConfigurator in mappingConfigurators)
+            {
+                mappingConfigurator.Configure(cfg);
+            }
         }
     }
 }
