@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Business.Mapper;
+using Data.Dtos;
+using Data.Entities;
+using Microsoft.Extensions.DependencyInjection;
 using TestingConsoleApp;
 
 internal class Program
@@ -10,6 +13,21 @@ internal class Program
         var serviceColletion = new ServiceCollection();
 
         serviceColletion.AddServices();
+        var serviceProvider = serviceColletion.BuildServiceProvider();
+        var mapper = serviceProvider.GetRequiredService<ApplicationMapper>();
 
+        var part = new Part()
+        {
+            Id = 15,
+            Location = "gigi",
+            Quantity = 44,
+            Size1 = 15,
+            Type = "tocodelegno",
+        };
+
+        var partDto = mapper.Map<PartDto>(part);
+
+
+        Console.WriteLine("Goodbye, World!");
     }
 }

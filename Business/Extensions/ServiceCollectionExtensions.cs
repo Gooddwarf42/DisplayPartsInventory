@@ -1,3 +1,4 @@
+using Business.Mapper;
 using Data.Extensions;
 using Data.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,5 +10,6 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddBusiness<TConfigureDbContext>(this IServiceCollection services)
         where TConfigureDbContext : class, IConfigureDbContext
         => services
-            .AddData<TConfigureDbContext>();
+            .AddData<TConfigureDbContext>()
+            .AddTransient<ApplicationMapper>();
 }
