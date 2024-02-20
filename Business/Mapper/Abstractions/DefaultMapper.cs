@@ -4,16 +4,10 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Business.Mapper.Abstractions;
 
-public class ApplicationMapper : AutoMapper.Mapper
+public class DefaultMapper(IServiceProvider serviceProvider) : AutoMapper.Mapper(new ProvaConfigurationProvider(serviceProvider))
 {
-    public ApplicationMapper(IServiceProvider serviceProvider) : base(new ProvaConfigurationProvider(serviceProvider))
+    private class ProvaConfigurationProvider(IServiceProvider serviceProvider) : MapperConfiguration(cfg => ConfigureMapping(cfg, serviceProvider))
     {
-    }
-
-    private class ProvaConfigurationProvider : MapperConfiguration
-    {
-        public ProvaConfigurationProvider(IServiceProvider serviceProvider) : base(cfg => ConfigureMapping(cfg, serviceProvider)) { }
-
         private static void ConfigureMapping(IMapperConfigurationExpression cfg, IServiceProvider serviceProvider)
         {
             var mappingConfigurators = serviceProvider.GetServices<IMappingConfiguration>();

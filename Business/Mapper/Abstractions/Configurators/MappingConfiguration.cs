@@ -2,7 +2,7 @@ using AutoMapper;
 
 namespace Business.Mapper.Abstractions.Configurators;
 
-public class MappingConfiguration<T1, T2> : IMappingConfiguration
+public abstract class MappingConfiguration<T1, T2> : IMappingConfiguration
 {
     public void Configure(IMapperConfigurationExpression configuratorExpression)
     {

@@ -1,3 +1,4 @@
+using Business.Mapper.Abstractions;
 using Business.Mapper.Abstractions.Extensions;
 using Data.Extensions;
 using Data.Infrastructure;
@@ -11,5 +12,5 @@ public static class ServiceCollectionExtensions
         where TConfigureDbContext : class, IConfigureDbContext
         => services
             .AddData<TConfigureDbContext>()
-            .AddMapper();
+            .AddMapper<DefaultMapper>(typeof(ServiceCollectionExtensions));
 }

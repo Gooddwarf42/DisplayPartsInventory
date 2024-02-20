@@ -1,4 +1,5 @@
-﻿using Business.Mapper.Abstractions;
+﻿using AutoMapper;
+using Business.Mapper.Abstractions;
 using Data.Dtos;
 using Data.Entities;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,7 +15,7 @@ internal class Program
 
         serviceColletion.AddServices();
         var serviceProvider = serviceColletion.BuildServiceProvider();
-        var mapper = serviceProvider.GetRequiredService<ApplicationMapper>();
+        var mapper = serviceProvider.GetRequiredService<IMapper>();
 
         var part = new Part()
         {
