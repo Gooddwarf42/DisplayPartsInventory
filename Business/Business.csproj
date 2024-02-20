@@ -11,9 +11,5 @@
         <ProjectReference Include="..\Cqrs\Cqrs.csproj" />
         <ProjectReference Include="..\Mapper\Mapper.csproj" />
     </ItemGroup>
-
-    <ItemGroup>
-        <PackageReference Include="automapper" Version="12.0.1" />
-    </ItemGroup>
     
 </Project>
