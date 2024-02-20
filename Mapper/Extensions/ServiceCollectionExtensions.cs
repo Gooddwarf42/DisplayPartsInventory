@@ -1,10 +1,9 @@
 using System.Reflection;
 using AutoMapper;
-using Business.Mapper.Abstractions.Configurators;
-using Business.Mapper.Configurators;
+using Mapper.Configurators;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Business.Mapper.Abstractions.Extensions;
+namespace Mapper.Extensions;
 
 public static class ServiceCollectionExtensions
 {

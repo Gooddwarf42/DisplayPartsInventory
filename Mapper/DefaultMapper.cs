@@ -1,8 +1,8 @@
 using AutoMapper;
-using Business.Mapper.Abstractions.Configurators;
+using Mapper.Configurators;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Business.Mapper.Abstractions;
+namespace Mapper;
 
 public class DefaultMapper(IServiceProvider serviceProvider) : AutoMapper.Mapper(new ProvaConfigurationProvider(serviceProvider))
 {

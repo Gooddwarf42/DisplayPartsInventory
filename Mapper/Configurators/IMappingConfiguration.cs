@@ -1,6 +1,6 @@
 using AutoMapper;
 
-namespace Business.Mapper.Abstractions.Configurators;
+namespace Mapper.Configurators;
 
 public interface IMappingConfiguration
 {

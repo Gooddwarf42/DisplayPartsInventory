@@ -1,6 +1,6 @@
 using AutoMapper;
 
-namespace Business.Mapper.Abstractions.Configurators;
+namespace Mapper.Configurators;
 
 public abstract class MappingConfiguration<T1, T2> : IMappingConfiguration
 {

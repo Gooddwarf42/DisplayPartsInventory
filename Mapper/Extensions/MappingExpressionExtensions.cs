@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
 using AutoMapper;
 
-namespace Business.Mapper.Abstractions.Extensions;
+namespace Mapper.Extensions;
 
 public static class MappingExpressionExtensions
 {

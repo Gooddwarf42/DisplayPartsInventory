@@ -1,8 +1,8 @@
 using AutoMapper;
-using Business.Mapper.Abstractions.Configurators;
-using Business.Mapper.Abstractions.Extensions;
 using Data.Dtos;
 using Data.Entities;
+using Mapper.Configurators;
+using Mapper.Extensions;
 
 namespace Business.Mapper.Configurators;
 
