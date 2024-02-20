@@ -2,7 +2,8 @@
 using Data.Dtos;
 using Data.Entities;
 using Microsoft.Extensions.DependencyInjection;
-using TestingConsoleApp;
+
+namespace TestingConsoleApp;
 
 internal class Program
 {
@@ -22,7 +23,7 @@ internal class Program
             Location = "gigi",
             Quantity = 44,
             Size1 = 15,
-            Type = "tocodelegno",
+            Type = "tocodelegno"
         };
 
         var partDto = mapper.Map<PartDto>(part);

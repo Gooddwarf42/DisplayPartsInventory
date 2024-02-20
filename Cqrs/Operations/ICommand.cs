@@ -1,5 +1,6 @@
 namespace Cqrs.Operations;
 
-public interface ICommand<TResult> : IOperation { }
+// ReSharper disable once UnusedTypeParameter
+public interface ICommand<TResult> : IOperation;
 
-public interface ICommand : ICommand<Empty> { }
+public interface ICommand : ICommand<Empty>;

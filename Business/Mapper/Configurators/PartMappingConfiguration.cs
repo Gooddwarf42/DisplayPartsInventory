@@ -12,6 +12,7 @@ internal sealed class PartMappingConfiguration : MappingConfiguration<Part, Part
     {
         expression.Bind(dto => dto.Size2, entity => entity.Size1 * 100);
     }
+
     protected override void Configure(IMappingExpression<PartDto, Part> expression)
     {
         expression.Bind(entity => entity.Size2, dto => dto.Size1 / 100);

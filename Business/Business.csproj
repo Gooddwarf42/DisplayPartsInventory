@@ -7,9 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Data\Data.csproj" />
-        <ProjectReference Include="..\Cqrs\Cqrs.csproj" />
-        <ProjectReference Include="..\Mapper\Mapper.csproj" />
+        <ProjectReference Include="..\Data\Data.csproj"/>
+        <ProjectReference Include="..\Cqrs\Cqrs.csproj"/>
+        <ProjectReference Include="..\Mapper\Mapper.csproj"/>
     </ItemGroup>
     
 </Project>

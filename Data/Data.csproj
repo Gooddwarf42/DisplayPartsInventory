@@ -12,12 +12,12 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Update="Entities\Abstractions\BaseEntity.cs">
-        <DependentUpon>IEntity.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Dtos\Abstractions\BaseDto.cs">
-        <DependentUpon>IDto.cs</DependentUpon>
-      </Compile>
+        <Compile Update="Entities\Abstractions\BaseEntity.cs">
+            <DependentUpon>IEntity.cs</DependentUpon>
+        </Compile>
+        <Compile Update="Dtos\Abstractions\BaseDto.cs">
+            <DependentUpon>IDto.cs</DependentUpon>
+        </Compile>
     </ItemGroup>
 
 </Project>
