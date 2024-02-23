@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Business.Commands;
 
-internal sealed class GetAllParts : ICommand<IEnumerable<PartDtoSummary>> { }
+internal sealed class GetAllParts : ICommand<IEnumerable<PartDtoSummary>>;
 
 internal sealed class GetAllPartsHandler(ApplicationDbContext dbContext) : ICommandHandler<GetAllParts, IEnumerable<PartDtoSummary>>
 {

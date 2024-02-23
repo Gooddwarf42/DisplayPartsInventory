@@ -1,3 +1,3 @@
 namespace Cqrs.Operations;
 
-public interface IOperation { }
+public interface IOperation;

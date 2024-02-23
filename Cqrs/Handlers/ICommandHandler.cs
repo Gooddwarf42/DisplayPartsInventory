@@ -3,13 +3,13 @@ using Cqrs.Operations;
 namespace Cqrs.Handlers;
 
 // TODO: this is still very much a draft!
-public interface ICommandHandler<TCommand, TResult> : IOperationHandler
+public interface ICommandHandler<in TCommand, TResult> : IOperationHandler
     where TCommand : ICommand<TResult>
 {
     public ValueTask<TResult> HandleAsync(TCommand command, CancellationToken cancellationToken);
 }
 
-public interface ICommandHandler<TCommand> : ICommandHandler<TCommand, Empty>
+public interface ICommandHandler<in TCommand> : ICommandHandler<TCommand, Empty>
     where TCommand : ICommand
 {
     async ValueTask<Empty> ICommandHandler<TCommand, Empty>.HandleAsync(TCommand command, CancellationToken cancellationToken)

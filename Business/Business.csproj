@@ -9,10 +9,7 @@
     <ItemGroup>
         <ProjectReference Include="..\Data\Data.csproj"/>
         <ProjectReference Include="..\Cqrs\Cqrs.csproj"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <PackageReference Include="automapper" Version="12.0.1"/>
+        <ProjectReference Include="..\Mapper\Mapper.csproj"/>
     </ItemGroup>
     
 </Project>

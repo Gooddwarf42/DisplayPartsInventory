@@ -12,4 +12,4 @@ public record PartDtoSummary : BaseDto
     public string? Notes { get; set; }
 }
 
-public sealed record PartDto : PartDtoSummary { }
+public sealed record PartDto : PartDtoSummary;
