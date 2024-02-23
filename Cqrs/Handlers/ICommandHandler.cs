@@ -3,7 +3,7 @@ using Cqrs.Operations;
 namespace Cqrs.Handlers;
 
 // TODO: this is still very much a draft!
-public interface ICommandHandler<in TCommand, TResult> : IOperationHandler
+public interface ICommandHandler<in TCommand, TResult> : IOperationHandler<TCommand>
     where TCommand : ICommand<TResult>
 {
     public ValueTask<TResult> HandleAsync(TCommand command, CancellationToken cancellationToken);
