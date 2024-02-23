@@ -1,6 +1,3 @@
 namespace Cqrs.Operations;
 
-// ReSharper disable once UnusedTypeParameter
-public interface IEvent<TResult> : IOperation; // I am not sure an event with result makes sense, but oh well.
-
-public interface IEvent : IEvent<Empty>;
+public interface IEvent : IOperation;
