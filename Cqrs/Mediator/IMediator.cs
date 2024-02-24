@@ -11,5 +11,5 @@ public interface IMediator
     }
     public ValueTask<TResult> RunAsync<TResult>(IQuery<TResult> query, CancellationToken cancellationToken = default);
 
-    //TODO events
+    public ValueTask RunAsync(IEvent cqrsEvent, CancellationToken cancellationToken = default);
 }
