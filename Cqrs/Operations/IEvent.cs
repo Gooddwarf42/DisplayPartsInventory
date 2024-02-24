@@ -1,3 +1,5 @@
 namespace Cqrs.Operations;
 
-public interface IEvent : IOperation;
+public interface IBaseEvent : IBaseOperation; //Just for interface marking
+
+public interface IEvent : IOperation, IBaseEvent;
