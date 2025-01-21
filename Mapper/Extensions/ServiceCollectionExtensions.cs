@@ -18,7 +18,7 @@ public static class ServiceCollectionExtensions
 
         var mappingConfigurations = assembly.DefinedTypes
             .Where(type => type.IsAssignableTo(typeof(IMappingConfiguration)))
-            .Where(type => type is { IsInterface: false, IsAbstract: false });
+            .Where(type => type is { IsInterface: false, IsAbstract: false, });
 
         foreach (var mappingConfiguration in mappingConfigurations)
         {

@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Business.Commands;
 
-internal sealed class GetAllParts : ICommand<IEnumerable<PartDtoSummary>>;
+internal sealed class GetAllPartsCommand : ICommand<IEnumerable<PartDtoSummary>>;
 
-internal sealed class GetAllPartsHandler(ApplicationDbContext dbContext) : ICommandHandler<GetAllParts, IEnumerable<PartDtoSummary>>
+internal sealed class GetAllPartsCommandHandler(ApplicationDbContext dbContext) : ICommandHandler<GetAllPartsCommand, IEnumerable<PartDtoSummary>>
 {
-    public async ValueTask<IEnumerable<PartDtoSummary>> HandleAsync(GetAllParts command, CancellationToken cancellationToken)
+    public async ValueTask<IEnumerable<PartDtoSummary>> HandleAsync(GetAllPartsCommand command, CancellationToken cancellationToken)
     {
         var entityList = await dbContext.Set<Part>()
             .ToListAsync(cancellationToken);
@@ -25,6 +25,6 @@ internal sealed class GetAllPartsHandler(ApplicationDbContext dbContext) : IComm
             Type = "mimmo",
             Location = "locescion",
             Quantity = 4,
-            Size1 = 11.1m
+            Size1 = 11.1m,
         };
 }

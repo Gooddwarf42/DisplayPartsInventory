@@ -11,10 +11,7 @@ public class DefaultMapper(IServiceProvider serviceProvider) : AutoMapper.Mapper
         private static void ConfigureMapping(IMapperConfigurationExpression cfg, IServiceProvider serviceProvider)
         {
             var mappingConfigurators = serviceProvider.GetServices<IMappingConfiguration>();
-            foreach (var mappingConfigurator in mappingConfigurators)
-            {
-                mappingConfigurator.Configure(cfg);
-            }
+            foreach (var mappingConfigurator in mappingConfigurators) mappingConfigurator.Configure(cfg);
         }
     }
 }

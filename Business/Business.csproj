@@ -11,5 +11,5 @@
         <ProjectReference Include="..\Cqrs\Cqrs.csproj"/>
         <ProjectReference Include="..\Mapper\Mapper.csproj"/>
     </ItemGroup>
-    
+
 </Project>

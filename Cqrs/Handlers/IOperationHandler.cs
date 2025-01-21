@@ -10,7 +10,6 @@ public interface IOperationHandler<in TOperation, TResult> : IOperationHandler
     public ValueTask<TResult> HandleAsync(TOperation operation, CancellationToken cancellationToken = default);
 }
 
-
 public interface IOperationHandler<in TOperation> : IOperationHandler<TOperation, Empty>
     where TOperation : IOperation
 {
@@ -19,5 +18,6 @@ public interface IOperationHandler<in TOperation> : IOperationHandler<TOperation
         await HandleAsync(operation, cancellationToken);
         return default;
     }
+
     public new ValueTask HandleAsync(TOperation operation, CancellationToken cancellationToken = default);
 }

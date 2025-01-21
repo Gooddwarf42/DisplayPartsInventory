@@ -17,13 +17,13 @@ internal class Program
         var serviceProvider = serviceColletion.BuildServiceProvider();
         var mapper = serviceProvider.GetRequiredService<IMapper>();
 
-        var part = new Part()
+        var part = new Part
         {
             Id = 15,
             Location = "gigi",
             Quantity = 44,
             Size1 = 15,
-            Type = "tocodelegno"
+            Type = "tocodelegno",
         };
 
         var partDto = mapper.Map<PartDto>(part);
