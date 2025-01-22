@@ -19,6 +19,12 @@
         <Compile Update="Handlers\ICommandHandler.cs">
             <DependentUpon>IOperationHandler.cs</DependentUpon>
         </Compile>
+        <Compile Update="Handlers\IQueryHandler.cs">
+          <DependentUpon>IOperationHandler.cs</DependentUpon>
+        </Compile>
+        <Compile Update="Handlers\IEventHandler.cs">
+          <DependentUpon>IOperationHandler.cs</DependentUpon>
+        </Compile>
     </ItemGroup>
 
 </Project>

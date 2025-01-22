@@ -18,7 +18,7 @@ internal sealed class GetAllPartsCommandHandler(ApplicationDbContext dbContext) 
         return entityList.Select(Map);
     }
 
-    private PartDtoSummary Map(Part part) =>
+    private static PartDtoSummary Map(Part part) =>
         //TODO USe autpmapper
         new()
         {
