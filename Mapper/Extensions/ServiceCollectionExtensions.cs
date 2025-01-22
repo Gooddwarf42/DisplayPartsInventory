@@ -11,6 +11,7 @@ public static class ServiceCollectionExtensions
         where TMapper : class, IMapper
         => source.AddMapper<TMapper>(typeInTargetAssembly.Assembly);
 
+    // ReSharper disable once MemberCanBePrivate.Global
     public static IServiceCollection AddMapper<TMapper>(this IServiceCollection source, Assembly assembly)
         where TMapper : class, IMapper
     {
