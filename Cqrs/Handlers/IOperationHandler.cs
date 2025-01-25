@@ -4,9 +4,17 @@ namespace Cqrs.Handlers;
 
 public interface IOperationHandler; // Just for interface marking
 
-public interface IOperationHandler<in TOperation, TResult> : IOperationHandler
+public interface IBaseOperationHandler<TResult> : IOperationHandler // I need this middle class to write the DefaultMediator!
+{
+    public ValueTask<TResult> HandleAsync(IOperation<TResult> operation, CancellationToken cancellationToken = default);
+}
+
+public interface IOperationHandler<in TOperation, TResult> : IBaseOperationHandler<TResult>
     where TOperation : IOperation<TResult>
 {
+    ValueTask<TResult> IBaseOperationHandler<TResult>.HandleAsync(IOperation<TResult> operation, CancellationToken cancellationToken)
+        => HandleAsync((TOperation)operation, cancellationToken);
+
     public ValueTask<TResult> HandleAsync(TOperation operation, CancellationToken cancellationToken = default);
 }
 

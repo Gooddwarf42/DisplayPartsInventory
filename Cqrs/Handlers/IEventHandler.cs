@@ -10,5 +10,5 @@ public interface IEventHandler<in TEvent> : IOperationHandler<TEvent>, IEventHan
     ValueTask IOperationHandler<TEvent>.HandleAsync(TEvent operation, CancellationToken cancellationToken)
         => HandleAsync(operation, cancellationToken);
 
-    public new ValueTask HandleAsync(TEvent cqrsEvent, CancellationToken cancellationToken = default);
+    public new ValueTask HandleAsync(TEvent @event, CancellationToken cancellationToken = default);
 }
