@@ -26,9 +26,15 @@ public class CqrsConfiguration
     }
 
     public CqrsConfiguration AddOperationHandler<TOperationHandler>()
-        where TOperationHandler : IOperationHandler
+        where TOperationHandler : class, IOperationHandler
     {
-        _handlerTypes.AddIfNotPresent(typeof(TOperationHandler));
+        var handlerTypeToAdd = typeof(TOperationHandler);
+        if (handlerTypeToAdd is not { IsAbstract: false })
+        {
+            throw new ArgumentException($"Can't register {handlerTypeToAdd.Name} as an Operation Handler. It is an abstract class", nameof(TOperationHandler));
+        }
+
+        _handlerTypes.AddIfNotPresent(handlerTypeToAdd);
         return this;
     }
 
@@ -36,7 +42,12 @@ public class CqrsConfiguration
     {
         if (!operationHandlerType.Extends<IOperationHandler>())
         {
-            throw new ArgumentException($"Can't register {operationHandlerType.Name} as an Operation Handler. Does it extedn {nameof(IOperationHandler)}?", nameof(operationHandlerType));
+            throw new ArgumentException($"Can't register {operationHandlerType.Name} as an Operation Handler. Does it extend {nameof(IOperationHandler)}?", nameof(operationHandlerType));
+        }
+
+        if (operationHandlerType is not { IsAbstract: false, IsInterface: false })
+        {
+            throw new ArgumentException($"Can't register {operationHandlerType.Name} as an Operation Handler. It is an abstract class", nameof(operationHandlerType));
         }
 
         _handlerTypes.AddIfNotPresent(operationHandlerType);
@@ -55,7 +66,7 @@ public class CqrsConfiguration
             .SelectMany(a => a.DefinedTypes)
             .Where
             (
-                type => type is { IsAbstract: false, IsInterface: false, }
+                type => type is { IsAbstract: false, IsInterface: false }
                         && type.Extends<IOperationHandler>()
             );
 
