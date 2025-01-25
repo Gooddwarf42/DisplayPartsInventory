@@ -55,6 +55,12 @@ public class CqrsContext
         return this;
     }
 
+    public CqrsContext AddAssembly(Type type)
+    {
+        var assembly = type.Assembly;
+        _assembliesToScan.AddIfNotPresent(assembly);
+        return this;
+    }
     public CqrsContext AddAssembly(Assembly assembly)
     {
         _assembliesToScan.AddIfNotPresent(assembly);
