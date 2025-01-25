@@ -8,7 +8,7 @@ namespace Cqrs;
 // Notes to self: Public methods are called to perform configuration of the Cqrs pattern
 // anything not strictly related to that is obviously either private or internal.
 // The latter case is relevant for stuff needed to register types into dependency injection
-public class CqrsConfiguration
+public class CqrsContext
 {
     private readonly List<Assembly> _assembliesToScan = [];
     private readonly List<Type> _handlerTypes = [];
@@ -19,13 +19,14 @@ public class CqrsConfiguration
     /// Configures the mediator used for cqrs. If this method is not invoked,
     /// the <see cref="DefaultMediator"/> is used instead
     /// </summary>
-    public CqrsConfiguration WithMediator(Type mediatorType)
+    public CqrsContext WithMediator<T>()
+        where T : class, IMediator
     {
-        MediatorType = mediatorType;
+        MediatorType = typeof(T);
         return this;
     }
 
-    public CqrsConfiguration AddOperationHandler<TOperationHandler>()
+    public CqrsContext AddOperationHandler<TOperationHandler>()
         where TOperationHandler : class, IOperationHandler
     {
         var handlerTypeToAdd = typeof(TOperationHandler);
@@ -38,7 +39,7 @@ public class CqrsConfiguration
         return this;
     }
 
-    public CqrsConfiguration AddOperationHandler(Type operationHandlerType)
+    public CqrsContext AddOperationHandler(Type operationHandlerType)
     {
         if (!operationHandlerType.Extends<IOperationHandler>())
         {
@@ -54,7 +55,7 @@ public class CqrsConfiguration
         return this;
     }
 
-    public CqrsConfiguration AddAssembly(Assembly assembly)
+    public CqrsContext AddAssembly(Assembly assembly)
     {
         _assembliesToScan.AddIfNotPresent(assembly);
         return this;
