@@ -50,7 +50,7 @@ public class CqrsContextTest : Test
         // Arrange
         var cqrsContext = new CqrsContext();
 
-        var expectedHandlerCount = 4;
+        const int expectedHandlerCount = 4;
         List<Type> expectedHandlerTypes =
         [
             typeof(AddNumbersCommandHandler),
