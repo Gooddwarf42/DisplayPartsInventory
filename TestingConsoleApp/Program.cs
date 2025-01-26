@@ -1,13 +1,10 @@
-﻿using AutoMapper;
-using Data.Dtos;
-using Data.Entities;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace TestingConsoleApp;
 
 internal class Program
 {
-    private static void Main(string[] args)
+    private static async Task Main(string[] args)
     {
         Console.WriteLine("Hello, World!");
 
@@ -15,21 +12,6 @@ internal class Program
 
         serviceColletion.AddServices();
         var serviceProvider = serviceColletion.BuildServiceProvider();
-        var mapper = serviceProvider.GetRequiredService<IMapper>();
-
-        var part = new Part
-        {
-            Id = 15,
-            Location = "gigi",
-            Quantity = 44,
-            Size1 = 15,
-            Type = "tocodelegno",
-        };
-
-        var partDto = mapper.Map<PartDto>(part);
-
-        var partAgain = mapper.Map<Part>(partDto);
-
 
         Console.WriteLine("Goodbye, World!");
     }

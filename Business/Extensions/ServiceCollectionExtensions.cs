@@ -1,3 +1,4 @@
+using Cqrs.Extensions;
 using Data.Extensions;
 using Data.Infrastructure;
 using Mapper;
@@ -12,5 +13,10 @@ public static class ServiceCollectionExtensions
         where TConfigureDbContext : class, IConfigureDbContext
         => services
             .AddData<TConfigureDbContext>()
-            .AddMapper<DefaultMapper>(typeof(ServiceCollectionExtensions));
+            .AddMapper<DefaultMapper>(typeof(ServiceCollectionExtensions))
+            .AddCqrs
+            (
+                cqrsContext =>
+                    cqrsContext.AddAssembly(typeof(ServiceCollectionExtensions))
+            );
 }
