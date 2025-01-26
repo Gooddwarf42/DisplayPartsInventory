@@ -7,7 +7,6 @@ namespace Cqrs.Tests.Infrastructure;
 public abstract class Test : IDisposable
 {
     private readonly IServiceScope _scope;
-    protected IServiceProvider ServiceProvider => _scope.ServiceProvider;
 
     protected Test()
     {
@@ -19,6 +18,8 @@ public abstract class Test : IDisposable
         var rootServiceProvider = serviceCollection.BuildServiceProvider();
         _scope = rootServiceProvider.CreateScope();
     }
+
+    protected IServiceProvider ServiceProvider => _scope.ServiceProvider;
 
     public void Dispose()
     {

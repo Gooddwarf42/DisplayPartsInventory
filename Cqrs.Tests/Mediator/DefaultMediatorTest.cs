@@ -16,9 +16,7 @@ public class DefaultMediatorTest : Test
     private readonly DefaultMediator _mediator;
 
     public DefaultMediatorTest()
-    {
-        _mediator = (DefaultMediator)ServiceProvider.GetRequiredService<IMediator>();
-    }
+        => _mediator = (DefaultMediator)ServiceProvider.GetRequiredService<IMediator>();
 
     // TODO check whether facts are ran on separate intances of the class! I don't remember this detail yet, and I am lazy.
     [Fact]

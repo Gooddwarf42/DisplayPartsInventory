@@ -86,12 +86,12 @@ public class CqrsContextTest : Test
     private class TestMediator : IMediator
     {
         public ValueTask<TResult> RunAsync<TResult>(ICommand<TResult> command, CancellationToken cancellationToken = default)
-            => throw new System.NotImplementedException();
+            => throw new NotImplementedException();
 
         public ValueTask<TResult> RunAsync<TResult>(IQuery<TResult> query, CancellationToken cancellationToken = default)
-            => throw new System.NotImplementedException();
+            => throw new NotImplementedException();
 
         public ValueTask RunAsync(IEvent @event, CancellationToken cancellationToken = default)
-            => throw new System.NotImplementedException();
+            => throw new NotImplementedException();
     }
 }
