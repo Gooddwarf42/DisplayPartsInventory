@@ -4,11 +4,13 @@ using Cqrs.Tests.Infrastructure;
 using Cqrs.Tests.SampleOperations.Commands;
 using Cqrs.Tests.SampleOperations.Events;
 using Cqrs.Tests.SampleOperations.Queries;
+using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
 namespace Cqrs.Tests.Mediator;
 
+[TestSubject(typeof(DefaultMediator))]
 public class DefaultMediatorTest : Test
 {
     private readonly DefaultMediator _mediator;
