@@ -29,7 +29,6 @@ public class ServiceCollectionExtensionsTest
         // Assert
 
         var cqrsContext = rootServiceProvider.GetRequiredService<CqrsContext>();
-        var mediator = rootServiceProvider.GetRequiredService<IMediator>();
 
         Assert.Equal(expectedHandlers, cqrsContext.HandlerTypes.Count());
         Assert.Equal(expectedMediatorType, cqrsContext.MediatorType);
