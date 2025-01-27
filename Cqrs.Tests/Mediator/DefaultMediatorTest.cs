@@ -18,7 +18,7 @@ public class DefaultMediatorTest : Test
     public DefaultMediatorTest()
         => _mediator = (DefaultMediator)ServiceProvider.GetRequiredService<IMediator>();
 
-    // TODO check whether facts are ran on separate intances of the class! I don't remember this detail yet, and I am lazy.
+    // Note to self: separate tests run on separate instances of the class
     [Fact]
     public async Task CommandWithReturnTypeExecutes()
     {
@@ -35,7 +35,7 @@ public class DefaultMediatorTest : Test
     }
 
     [Fact]
-    public async Task CommandWithOutReturnTypeExecutes()
+    public async Task CommandWithoutReturnTypeExecutes()
     {
         // Arrange
         var number = new Number(42);

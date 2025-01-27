@@ -1,7 +1,7 @@
 using Cqrs.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Cqrs.Tests.Extensions;
+namespace Cqrs.Tests;
 
 public static class ServiceCollectionExtensions
 {
