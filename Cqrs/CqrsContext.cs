@@ -17,6 +17,7 @@ public class CqrsContext
     private readonly List<DecoratorInfo> _decoratorTypes = [];
     internal Type MediatorType = typeof(DefaultMediator);
     internal IEnumerable<Type> HandlerTypes => _handlerTypes.AsEnumerable();
+    internal IEnumerable<DecoratorInfo> DecoratorInfos => _decoratorTypes.AsEnumerable();
 
     /// <summary>
     /// Configures the mediator used for cqrs. If this method is not invoked,
@@ -71,14 +72,19 @@ public class CqrsContext
         return this;
     }
 
-    public CqrsContext AddDecorator<TDecorator>(int order)
-        where TDecorator : IDecorator
-        => AddDecorator<TDecorator>(order, _ => true);
+    public CqrsContext AddDecorator(Type decoratorType, int order)
+        => AddDecorator(decoratorType, order, _ => true);
 
-    public CqrsContext AddDecorator<TDecorator>(int order, Func<Type, bool> predicate)
-        where TDecorator : IDecorator
+    public CqrsContext AddDecorator(Type decoratorType, int order, Func<Type, bool> predicate)
     {
-        var decoratorType = typeof(TDecorator);
+        if (!decoratorType.Extends<IDecorator>())
+        {
+            throw new ArgumentOutOfRangeException
+            (
+                nameof(decoratorType),
+                $"Can't add decorator {decoratorType}.It does not extend {nameof(IDecorator)}"
+            );
+        }
 
         if (_decoratorTypes.Any(rule => rule.Order == order))
         {
@@ -88,7 +94,7 @@ public class CqrsContext
 
         if (_decoratorTypes.Any(rule => rule.DecoratorType == decoratorType))
         {
-            throw new ArgumentException($"Can't add decorator {decoratorType}. It has already been added", nameof(TDecorator));
+            throw new ArgumentException($"Can't add decorator {decoratorType}. It has already been added", nameof(decoratorType));
         }
 
         _decoratorTypes.Add(new DecoratorInfo(decoratorType, order, predicate));
@@ -118,5 +124,5 @@ public class CqrsContext
             .OrderBy(t => t.Order)
             .Select(t => t.DecoratorType);
 
-    private record DecoratorInfo(Type DecoratorType, int Order, Func<Type, bool> Predicate);
+    internal record DecoratorInfo(Type DecoratorType, int Order, Func<Type, bool> Predicate);
 }
