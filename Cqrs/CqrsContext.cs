@@ -1,6 +1,8 @@
 using System.Reflection;
+using Cqrs.Decorator;
 using Cqrs.Handlers;
 using Cqrs.Mediator;
+using Cqrs.Operations;
 using Utils.Extensions;
 
 namespace Cqrs;
@@ -12,6 +14,7 @@ public class CqrsContext
 {
     private readonly List<Assembly> _assembliesToScan = [];
     private readonly List<Type> _handlerTypes = [];
+    private readonly List<DecoratorInfo> _decoratorTypes = [];
     internal Type MediatorType = typeof(DefaultMediator);
     internal IEnumerable<Type> HandlerTypes => _handlerTypes.AsEnumerable();
 
@@ -61,9 +64,35 @@ public class CqrsContext
         _assembliesToScan.AddIfNotPresent(assembly);
         return this;
     }
+
     public CqrsContext AddAssembly(Assembly assembly)
     {
         _assembliesToScan.AddIfNotPresent(assembly);
+        return this;
+    }
+
+    public CqrsContext AddDecorator<TDecorator>(int order)
+        where TDecorator : IDecorator
+        => AddDecorator<TDecorator>(order, _ => true);
+
+    public CqrsContext AddDecorator<TDecorator>(int order, Func<Type, bool> predicate)
+        where TDecorator : IDecorator
+    {
+        var decoratorType = typeof(TDecorator);
+
+        if (_decoratorTypes.Any(rule => rule.Order == order))
+        {
+            throw new ArgumentException($"Can't add decorator {decoratorType}. A decorator with the same order has already been added", nameof(order));
+        }
+
+
+        if (_decoratorTypes.Any(rule => rule.DecoratorType == decoratorType))
+        {
+            throw new ArgumentException($"Can't add decorator {decoratorType}. It has already been added", nameof(TDecorator));
+        }
+
+        _decoratorTypes.Add(new DecoratorInfo(decoratorType, order, predicate));
+
         return this;
     }
 
@@ -79,4 +108,15 @@ public class CqrsContext
 
         _handlerTypes.AddWithoutDuplicates(handlerTypes);
     }
+
+    internal IEnumerable<Type> GetDecoratorsTypes<TResult>(IOperation<TResult> operation)
+        => GetDecoratorsTypes(operation.GetType());
+
+    internal IEnumerable<Type> GetDecoratorsTypes(Type operationType)
+        => _decoratorTypes
+            .Where(t => t.Predicate(operationType))
+            .OrderBy(t => t.Order)
+            .Select(t => t.DecoratorType);
+
+    private record DecoratorInfo(Type DecoratorType, int Order, Func<Type, bool> Predicate);
 }
