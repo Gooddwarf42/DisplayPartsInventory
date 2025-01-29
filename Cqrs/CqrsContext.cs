@@ -73,7 +73,7 @@ public class CqrsContext
     }
 
     public CqrsContext AddDecorator(Type decoratorType, int order)
-        => AddDecorator(decoratorType, order, _ => true);
+        => AddDecorator(decoratorType, order, DecorationFilters.All());
 
     public CqrsContext AddDecorator(Type decoratorType, int order, Func<Type, bool> predicate)
     {
