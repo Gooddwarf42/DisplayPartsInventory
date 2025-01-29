@@ -1,5 +1,4 @@
 using System;
-using Cqrs.Tests.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Cqrs.Tests.Infrastructure;

@@ -110,6 +110,7 @@ public class CqrsContext
             (
                 type => type is { IsAbstract: false, IsInterface: false }
                         && type.Extends<IOperationHandler>()
+                        && !type.Extends<IDecorator>()
             );
 
         _handlerTypes.AddWithoutDuplicates(handlerTypes);

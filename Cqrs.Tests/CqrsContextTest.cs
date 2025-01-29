@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Cqrs.Decorator;
+using Cqrs.Handlers;
 using Cqrs.Mediator;
 using Cqrs.Operations;
-using Cqrs.Tests.Infrastructure;
 using Cqrs.Tests.SampleOperations.Commands;
 using Cqrs.Tests.SampleOperations.Events;
 using Cqrs.Tests.SampleOperations.Queries;
@@ -15,7 +16,7 @@ using Xunit;
 namespace Cqrs.Tests;
 
 [TestSubject(typeof(CqrsContext))]
-public class CqrsContextTest : Test
+public class CqrsContextTest
 {
     [Fact]
     public void HasDefaultMediator()
@@ -82,6 +83,40 @@ public class CqrsContextTest : Test
         }
     }
 
+    [Fact]
+    public void AddDecorator()
+    {
+        // Arrange
+        var cqrsContext = new CqrsContext();
+
+        const int expectedDecoratorCount = 2;
+        List<Type> expectedDecoratorTypes =
+        [
+            typeof(TestDecorator<,>),
+            typeof(TestDecorator2<,>),
+        ];
+
+        // Act
+        cqrsContext.AddDecorator(typeof(TestDecorator<,>), 0);
+        cqrsContext.AddDecorator(typeof(TestDecorator2<,>), 1, DecorationFilters.OfType<AddNumbersCommand>());
+
+        // Assert
+        var decoratorsInCqrsContext = cqrsContext.DecoratorInfos.ToList();
+
+        Assert.Equal(expectedDecoratorCount, decoratorsInCqrsContext.Count);
+        for (var i = 0; i < expectedDecoratorTypes.Count; i++)
+        {
+            Assert.Equal(expectedDecoratorTypes[i], decoratorsInCqrsContext[i].DecoratorType);
+        }
+
+        // Check if predicates have been added properly
+        Assert.True(decoratorsInCqrsContext[0].Predicate(typeof(AddNumbersCommand)));
+        Assert.True(decoratorsInCqrsContext[1].Predicate(typeof(AddNumbersCommand)));
+        Assert.True(decoratorsInCqrsContext[0].Predicate(typeof(IncrementNumberCommand)));
+        Assert.False(decoratorsInCqrsContext[1].Predicate(typeof(IncrementNumberCommand)));
+    }
+
+
     // ReSharper disable once ClassNeverInstantiated.Local
     private class TestMediator : IMediator
     {
@@ -92,6 +127,18 @@ public class CqrsContextTest : Test
             => throw new NotImplementedException();
 
         public ValueTask RunAsync(IEvent @event, CancellationToken cancellationToken = default)
+            => throw new NotImplementedException();
+    }
+
+    private class TestDecorator<TOperation, TResult>(IOperationHandler<TOperation, TResult> decoratee) : BaseDecorator<TOperation, TResult>(decoratee) where TOperation : IOperation<TResult>
+    {
+        protected override ValueTask<TResult> DecorateAsync(IOperationHandler<TOperation, TResult> decoratee, TOperation operation, CancellationToken cancellationToken)
+            => throw new NotImplementedException();
+    }
+
+    private class TestDecorator2<TOperation, TResult>(IOperationHandler<TOperation, TResult> decoratee) : BaseDecorator<TOperation, TResult>(decoratee) where TOperation : IOperation<TResult>
+    {
+        protected override ValueTask<TResult> DecorateAsync(IOperationHandler<TOperation, TResult> decoratee, TOperation operation, CancellationToken cancellationToken)
             => throw new NotImplementedException();
     }
 }

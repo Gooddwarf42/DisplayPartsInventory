@@ -43,7 +43,45 @@ public class ServiceCollectionExtensionsTest
         Assert.Equal(expectedMediatorType, cqrsContext.MediatorType);
     }
 
+    [Fact]
+    public void Should_Throw_When_AddingSameDecorator()
+    {
+        // Arrange
+        var serviceCollection = new ServiceCollection();
+        // ReSharper disable once ConvertToLocalFunction
+        Action<CqrsContext> configuration = cqrsContext
+            => cqrsContext
+                .AddAssembly(typeof(ServiceCollectionExtensionsTest))
+                .AddDecorator(typeof(TestDecorator<,>), 0)
+                .AddDecorator(typeof(TestDecorator<,>), 1);
+
+        // Act  // Assert
+        Assert.Throws<ArgumentException>(() => serviceCollection.AddCqrs(configuration));
+    }
+
+    [Fact]
+    public void Should_Throw_When_AddingDecoratorsWithSameOrder()
+    {
+        // Arrange
+        var serviceCollection = new ServiceCollection();
+        // ReSharper disable once ConvertToLocalFunction
+        Action<CqrsContext> configuration = cqrsContext
+            => cqrsContext
+                .AddAssembly(typeof(ServiceCollectionExtensionsTest))
+                .AddDecorator(typeof(TestDecorator<,>), 0)
+                .AddDecorator(typeof(TestDecorator2<,>), 0);
+
+        // Act  // Assert
+        Assert.Throws<ArgumentException>(() => serviceCollection.AddCqrs(configuration));
+    }
+
     private class TestDecorator<TOperation, TResult>(IOperationHandler<TOperation, TResult> decoratee) : BaseDecorator<TOperation, TResult>(decoratee) where TOperation : IOperation<TResult>
+    {
+        protected override ValueTask<TResult> DecorateAsync(IOperationHandler<TOperation, TResult> decoratee, TOperation operation, CancellationToken cancellationToken)
+            => throw new NotImplementedException();
+    }
+
+    private class TestDecorator2<TOperation, TResult>(IOperationHandler<TOperation, TResult> decoratee) : BaseDecorator<TOperation, TResult>(decoratee) where TOperation : IOperation<TResult>
     {
         protected override ValueTask<TResult> DecorateAsync(IOperationHandler<TOperation, TResult> decoratee, TOperation operation, CancellationToken cancellationToken)
             => throw new NotImplementedException();
