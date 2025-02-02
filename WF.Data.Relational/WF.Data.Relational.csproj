@@ -11,4 +11,10 @@
         <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.12"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <Compile Update="Entities\BaseEntity.cs">
+            <DependentUpon>IEntity.cs</DependentUpon>
+        </Compile>
+    </ItemGroup>
+
 </Project>
