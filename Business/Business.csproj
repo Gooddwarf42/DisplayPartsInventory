@@ -8,7 +8,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Data\Data.csproj"/>
-        <ProjectReference Include="..\Cqrs\Cqrs.csproj"/>
+        <ProjectReference Include="..\WF.Cqrs\WF.Cqrs.csproj"/>
         <ProjectReference Include="..\Mapper\Mapper.csproj"/>
     </ItemGroup>
 

@@ -7,15 +7,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business", "Business\Business.csproj", "{8C7AB87B-70D8-450D-967A-46FEBC4BBE38}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cqrs", "Cqrs\Cqrs.csproj", "{34425BC6-0270-4A99-8480-C4B000EFFED7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WF.Cqrs", "WF.Cqrs\WF.Cqrs.csproj", "{34425BC6-0270-4A99-8480-C4B000EFFED7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingConsoleApp", "TestingConsoleApp\TestingConsoleApp.csproj", "{447703E4-14F7-432A-B0DF-59CD0C540734}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mapper", "Mapper\Mapper.csproj", "{2548A455-D9F1-49C8-ACDE-19220F1B1B71}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "Utils\Utils.csproj", "{E157869A-70DA-43E5-843F-AE25131532AC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WF.Utils", "WF.Utils\WF.Utils.csproj", "{E157869A-70DA-43E5-843F-AE25131532AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cqrs.Tests", "Cqrs.Tests\Cqrs.Tests.csproj", "{47191BF9-F3E1-40F6-A5C8-E7A7E7258DE9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WF.Cqrs.Tests", "WF.Cqrs.Tests\WF.Cqrs.Tests.csproj", "{47191BF9-F3E1-40F6-A5C8-E7A7E7258DE9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

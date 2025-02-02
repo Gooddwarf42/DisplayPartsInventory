@@ -1,9 +1,9 @@
-using Cqrs.Handlers;
-using Cqrs.Operations;
 using Data.Dtos;
 using Data.Entities;
 using Data.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using WF.Cqrs.Handlers;
+using WF.Cqrs.Operations;
 
 namespace Business.Commands;
 
