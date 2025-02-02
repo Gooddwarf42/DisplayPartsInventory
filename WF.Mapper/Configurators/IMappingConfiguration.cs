@@ -1,6 +1,6 @@
 using AutoMapper;
 
-namespace Mapper.Configurators;
+namespace WF.Mapper.Configurators;
 
 public interface IMappingConfiguration
 {

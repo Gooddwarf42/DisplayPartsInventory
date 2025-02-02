@@ -1,8 +1,8 @@
 using AutoMapper;
-using Mapper.Configurators;
 using Microsoft.Extensions.DependencyInjection;
+using WF.Mapper.Configurators;
 
-namespace Mapper;
+namespace WF.Mapper;
 
 public class DefaultMapper(IServiceProvider serviceProvider) : AutoMapper.Mapper(new DefaultConfigurationProvider(serviceProvider), serviceProvider.GetRequiredService)
 {

@@ -9,7 +9,7 @@
     <ItemGroup>
         <ProjectReference Include="..\Data\Data.csproj"/>
         <ProjectReference Include="..\WF.Cqrs\WF.Cqrs.csproj"/>
-        <ProjectReference Include="..\Mapper\Mapper.csproj"/>
+        <ProjectReference Include="..\WF.Mapper\WF.Mapper.csproj"/>
     </ItemGroup>
 
 </Project>

@@ -1,9 +1,9 @@
 using System.Reflection;
 using AutoMapper;
-using Mapper.Configurators;
 using Microsoft.Extensions.DependencyInjection;
+using WF.Mapper.Configurators;
 
-namespace Mapper.Extensions;
+namespace WF.Mapper.Extensions;
 
 public static class ServiceCollectionExtensions
 {

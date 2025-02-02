@@ -1,8 +1,8 @@
 using AutoMapper;
 using Data.Dtos;
 using Data.Entities;
-using Mapper.Configurators;
-using Mapper.Extensions;
+using WF.Mapper.Configurators;
+using WF.Mapper.Extensions;
 
 namespace Business.Mapper.Configurators;
 

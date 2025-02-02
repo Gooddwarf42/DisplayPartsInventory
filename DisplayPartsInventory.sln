@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WF.Cqrs", "WF.Cqrs\WF.Cqrs.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingConsoleApp", "TestingConsoleApp\TestingConsoleApp.csproj", "{447703E4-14F7-432A-B0DF-59CD0C540734}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mapper", "Mapper\Mapper.csproj", "{2548A455-D9F1-49C8-ACDE-19220F1B1B71}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WF.Mapper", "WF.Mapper\WF.Mapper.csproj", "{2548A455-D9F1-49C8-ACDE-19220F1B1B71}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WF.Utils", "WF.Utils\WF.Utils.csproj", "{E157869A-70DA-43E5-843F-AE25131532AC}"
 EndProject

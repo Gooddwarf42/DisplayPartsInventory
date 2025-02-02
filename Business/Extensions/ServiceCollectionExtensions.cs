@@ -1,9 +1,9 @@
 using Data.Extensions;
 using Data.Infrastructure;
-using Mapper;
-using Mapper.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using WF.Cqrs.Extensions;
+using WF.Mapper;
+using WF.Mapper.Extensions;
 
 namespace Business.Extensions;
 
