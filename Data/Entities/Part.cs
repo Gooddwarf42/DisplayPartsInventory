@@ -1,4 +1,4 @@
-﻿using Data.Entities.Abstractions;
+﻿using WF.Data.Relational.Entities;
 
 namespace Data.Entities;
 

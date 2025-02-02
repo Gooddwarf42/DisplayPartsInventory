@@ -1,9 +1,9 @@
-using Data.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using WF.Data.Relational.Context;
 
 namespace TestingConsoleApp;
 
-public class TestConfigureDbContext : IConfigureDbContext
+public class TestDbContextConfigurator : IDbContextConfigurator
 {
     public void OnDbContextConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

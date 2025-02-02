@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace Data.Infrastructure;
+namespace WF.Data.Relational.Context;
 
-public interface IConfigureDbContext
+public interface IDbContextConfigurator
 {
     public void OnDbContextConfiguring(DbContextOptionsBuilder optionsBuilder);
 }

@@ -17,6 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WF.Utils", "WF.Utils\WF.Uti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WF.Cqrs.Tests", "WF.Cqrs.Tests\WF.Cqrs.Tests.csproj", "{47191BF9-F3E1-40F6-A5C8-E7A7E7258DE9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WF.Data.Relational", "WF.Data.Relational\WF.Data.Relational.csproj", "{F5C68E39-2F7D-46E3-9DE5-7C95F8B5D5D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WF.Domain", "WF.Domain\WF.Domain.csproj", "{B828513C-11D1-45B7-8998-BD99C7FFE0CF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,5 +58,13 @@ Global
 		{47191BF9-F3E1-40F6-A5C8-E7A7E7258DE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47191BF9-F3E1-40F6-A5C8-E7A7E7258DE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47191BF9-F3E1-40F6-A5C8-E7A7E7258DE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5C68E39-2F7D-46E3-9DE5-7C95F8B5D5D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5C68E39-2F7D-46E3-9DE5-7C95F8B5D5D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5C68E39-2F7D-46E3-9DE5-7C95F8B5D5D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5C68E39-2F7D-46E3-9DE5-7C95F8B5D5D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B828513C-11D1-45B7-8998-BD99C7FFE0CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B828513C-11D1-45B7-8998-BD99C7FFE0CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B828513C-11D1-45B7-8998-BD99C7FFE0CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B828513C-11D1-45B7-8998-BD99C7FFE0CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
