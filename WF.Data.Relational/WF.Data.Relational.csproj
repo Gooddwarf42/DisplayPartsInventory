@@ -17,4 +17,8 @@
         </Compile>
     </ItemGroup>
 
+    <ItemGroup>
+        <ProjectReference Include="..\WF.Utils\WF.Utils.csproj"/>
+    </ItemGroup>
+
 </Project>

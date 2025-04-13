@@ -5,7 +5,7 @@ using WF.Data.Relational.Entities;
 
 namespace WF.Data.Relational.Configurators;
 
-public abstract class BaseEntityConfigurator<TEntity> : IEntityTypeConfiguration<TEntity>
+public abstract class BaseEntityConfigurator<TEntity> : IEntityTypeConfiguration<TEntity>, IBaseEntityConfigurator
     where TEntity : class, IEntity
 {
     protected virtual string TableName => typeof(TEntity).Name.Pluralize();
@@ -22,3 +22,5 @@ public abstract class BaseEntityConfigurator<TEntity> : IEntityTypeConfiguration
 
     protected virtual void ConfigureEntity(EntityTypeBuilder<TEntity> builder) { }
 }
+
+internal interface IBaseEntityConfigurator; // Only for interface marking

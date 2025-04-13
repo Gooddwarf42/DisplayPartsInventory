@@ -37,9 +37,7 @@ public class ServiceCollectionExtensionsTest
         var cqrsContext = rootServiceProvider.GetRequiredService<CqrsContext>();
 
         Assert.Equal(expectedHandlers, cqrsContext.HandlerTypes.Count());
-#pragma warning disable xUnit2013
         Assert.Equal(expectedDecorators, cqrsContext.DecoratorInfos.Count());
-#pragma warning restore xUnit2013
         Assert.Equal(expectedMediatorType, cqrsContext.MediatorType);
     }
 

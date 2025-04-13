@@ -1,4 +1,9 @@
+using System.Reflection;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using WF.Data.Relational.Configurators;
+using WF.Data.Relational.Entities;
+using WF.Utils.Extensions;
 
 namespace WF.Data.Relational.Context;
 
@@ -9,7 +14,39 @@ public class ApplicationDbContext(IDbContextConfigurator dbContextConfigurator) 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // TODO
+        var assembliesToScan = dbContextConfigurator.GetEntityAssemblies().ToArray();
+
+        var entityTypes = assembliesToScan.GetConcreteTypesExtending<IEntity>();
+
+        var entityConfiguratorTypes = assembliesToScan.GetConcreteTypesExtending<IBaseEntityConfigurator>().ToArray();
+
+        var modelBuilderEntityMethod = typeof(ModelBuilder)
+            .GetMethods(BindingFlags.Instance | BindingFlags.Public)
+            .Single(m => m is { Name: nameof(ModelBuilder.Entity), IsGenericMethod: true });
+
+        foreach (var entityType in entityTypes)
+        {
+            var configuratorParentType = typeof(BaseEntityConfigurator<>)
+                .MakeGenericType(entityType);
+
+            var configuratorType = entityConfiguratorTypes
+                .SingleOrDefault(entityConfiguratorType => entityConfiguratorType.Extends(configuratorParentType));
+
+            if (configuratorType is null)
+            {
+                throw new NotSupportedException($"No entity configurator found for {entityType.Name}");
+            }
+
+            var configuratorInstance = Activator.CreateInstance(configuratorType);
+            var configureMethod = configuratorType.GetMethod(nameof(BaseEntityConfigurator<IEntity>.Configure));
+            var entityTypeBuilder = (EntityTypeBuilder)modelBuilderEntityMethod
+                .MakeGenericMethod(entityType)
+                .Invoke(modelBuilder, [])!;
+
+            configureMethod!.Invoke(configuratorInstance, [entityTypeBuilder]);
+        }
+
+        // TODO test - what this should do:
         // Scan entities assemblies
         // Get all concrete IEntity types
         // Loop on IEntity types

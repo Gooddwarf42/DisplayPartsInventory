@@ -6,4 +6,10 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+        <Compile Update="Dtos\BaseDto.cs">
+            <DependentUpon>IDto.cs</DependentUpon>
+        </Compile>
+    </ItemGroup>
+
 </Project>
