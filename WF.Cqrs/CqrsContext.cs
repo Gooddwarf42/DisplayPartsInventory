@@ -32,16 +32,7 @@ public class CqrsContext
 
     public CqrsContext AddOperationHandler<TOperationHandler>()
         where TOperationHandler : class, IOperationHandler
-    {
-        var handlerTypeToAdd = typeof(TOperationHandler);
-        if (handlerTypeToAdd is not { IsAbstract: false })
-        {
-            throw new ArgumentException($"Can't register {handlerTypeToAdd.Name} as an Operation Handler. It is an abstract class", nameof(TOperationHandler));
-        }
-
-        _handlerTypes.AddIfNotPresent(handlerTypeToAdd);
-        return this;
-    }
+        => AddOperationHandler(typeof(TOperationHandler));
 
     public CqrsContext AddOperationHandler(Type operationHandlerType)
     {
@@ -60,11 +51,7 @@ public class CqrsContext
     }
 
     public CqrsContext AddAssembly(Type type)
-    {
-        var assembly = type.Assembly;
-        _assembliesToScan.AddIfNotPresent(assembly);
-        return this;
-    }
+        => AddAssembly(type.Assembly);
 
     public CqrsContext AddAssembly(Assembly assembly)
     {

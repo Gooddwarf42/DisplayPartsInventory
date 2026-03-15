@@ -4,7 +4,7 @@ using WF.Mapper.Configurators;
 
 namespace WF.Mapper;
 
-public class DefaultMapper(IServiceProvider serviceProvider) : AutoMapper.Mapper(new DefaultConfigurationProvider(serviceProvider), serviceProvider.GetRequiredService)
+public sealed class DefaultMapper(IServiceProvider serviceProvider) : AutoMapper.Mapper(new DefaultConfigurationProvider(serviceProvider), serviceProvider.GetRequiredService)
 {
     private sealed class DefaultConfigurationProvider(IServiceProvider serviceProvider) : MapperConfiguration(cfg => ConfigureMapping(cfg, serviceProvider))
     {

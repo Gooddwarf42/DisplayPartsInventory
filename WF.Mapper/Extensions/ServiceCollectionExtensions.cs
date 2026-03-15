@@ -2,6 +2,7 @@ using System.Reflection;
 using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 using WF.Mapper.Configurators;
+using WF.Utils.Extensions;
 
 namespace WF.Mapper.Extensions;
 
@@ -17,11 +18,7 @@ public static class ServiceCollectionExtensions
     {
         source.AddTransient<IMapper, TMapper>();
 
-        var mappingConfigurations = assembly.DefinedTypes
-            .Where(type => type.IsAssignableTo(typeof(IMappingConfiguration)))
-            .Where(type => type is { IsInterface: false, IsAbstract: false, });
-
-        foreach (var mappingConfiguration in mappingConfigurations)
+        foreach (var mappingConfiguration in assembly.GetConcreteTypesExtending<IMappingConfiguration>())
         {
             source.AddTransient(typeof(IMappingConfiguration), mappingConfiguration);
         }

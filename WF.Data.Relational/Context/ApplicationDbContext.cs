@@ -7,7 +7,7 @@ using WF.Utils.Extensions;
 
 namespace WF.Data.Relational.Context;
 
-public class ApplicationDbContext(IDbContextConfigurator dbContextConfigurator) : DbContext
+public sealed class ApplicationDbContext(IDbContextConfigurator dbContextConfigurator) : DbContext
 {
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => dbContextConfigurator.OnDbContextConfiguring(optionsBuilder);
@@ -37,7 +37,8 @@ public class ApplicationDbContext(IDbContextConfigurator dbContextConfigurator) 
                 throw new NotSupportedException($"No entity configurator found for {entityType.Name}");
             }
 
-            var configuratorInstance = Activator.CreateInstance(configuratorType);
+            // I can not really cast this and use it directly, since it has type BaseEntityConfigurator<entityType> 
+            var configuratorInstance = Activator.CreateInstance(configuratorType)!;
             var configureMethod = configuratorType.GetMethod(nameof(BaseEntityConfigurator<IEntity>.Configure));
             var entityTypeBuilder = (EntityTypeBuilder)modelBuilderEntityMethod
                 .MakeGenericMethod(entityType)
