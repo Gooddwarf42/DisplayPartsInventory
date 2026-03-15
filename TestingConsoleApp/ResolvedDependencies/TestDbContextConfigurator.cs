@@ -3,16 +3,16 @@ using Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using WF.Data.Relational.Context;
 
-namespace TestingConsoleApp;
+namespace TestingConsoleApp.ResolvedDependencies;
 
 public class TestDbContextConfigurator : IDbContextConfigurator
 {
     public void OnDbContextConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        //throw new NotImplementedException(); TODO
+        var path = Path.Combine(Path.GetTempPath(), "verySimpleTest.db");
+        optionsBuilder.UseSqlite($"Data Source={path}");
     }
-
-    // TODO just a draft
+    
     public IEnumerable<Assembly> GetEntityAssemblies()
     {
         yield return typeof(Part).Assembly;

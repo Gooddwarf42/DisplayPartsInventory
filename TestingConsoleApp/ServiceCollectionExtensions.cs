@@ -1,5 +1,6 @@
 using Business.Extensions;
 using Microsoft.Extensions.DependencyInjection;
+using TestingConsoleApp.ResolvedDependencies;
 
 namespace TestingConsoleApp;
 
