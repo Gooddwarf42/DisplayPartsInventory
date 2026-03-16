@@ -1,7 +1,7 @@
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 
-namespace WF.Data.Relational.Context;
+namespace WF.Data.Context;
 
 public interface IDbContextConfigurator
 {

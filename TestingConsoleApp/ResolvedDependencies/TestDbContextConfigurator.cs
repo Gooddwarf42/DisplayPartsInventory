@@ -1,7 +1,7 @@
 using System.Reflection;
 using Data.Entities;
 using Microsoft.EntityFrameworkCore;
-using WF.Data.Relational.Context;
+using WF.Data.Context;
 
 namespace TestingConsoleApp.ResolvedDependencies;
 

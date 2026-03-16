@@ -3,7 +3,7 @@ using Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using WF.Cqrs.Handlers;
 using WF.Cqrs.Operations;
-using WF.Data.Relational.Context;
+using WF.Data.Context;
 
 namespace Business.Commands;
 

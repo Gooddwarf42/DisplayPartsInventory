@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace WF.Data.Relational.Context;
+namespace WF.Data.Context;
 
 public sealed class ApplicationDbContext(IDbContextConfigurator dbContextConfigurator) : DbContext
 {

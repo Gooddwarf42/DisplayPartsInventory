@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\WF.Data.Relational\WF.Data.Relational.csproj"/>
+        <ProjectReference Include="..\WF.Data\WF.Data.csproj" />
         <ProjectReference Include="..\WF.Domain\WF.Domain.csproj"/>
     </ItemGroup>
 

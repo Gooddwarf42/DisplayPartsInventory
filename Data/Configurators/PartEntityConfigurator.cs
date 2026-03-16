@@ -1,7 +1,7 @@
 using Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using WF.Data.Relational.Configurators;
+using WF.Data.Configurators;
 
 namespace Data.Configurators;
 

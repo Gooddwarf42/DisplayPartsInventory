@@ -1,4 +1,4 @@
-namespace WF.Data.Relational.Entities;
+namespace WF.Data.Entities;
 
 public interface IEntity
 {

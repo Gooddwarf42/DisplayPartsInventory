@@ -1,9 +1,9 @@
 using Humanizer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using WF.Data.Relational.Entities;
+using WF.Data.Entities;
 
-namespace WF.Data.Relational.Configurators;
+namespace WF.Data.Configurators;
 
 public abstract class BaseEntityConfigurator<TEntity> : IEntityTypeConfiguration<TEntity>, IBaseEntityConfigurator
     where TEntity : class, IEntity

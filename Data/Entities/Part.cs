@@ -1,4 +1,4 @@
-﻿using WF.Data.Relational.Entities;
+﻿using WF.Data.Entities;
 
 namespace Data.Entities;
 

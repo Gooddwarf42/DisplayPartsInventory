@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using WF.Cqrs.Extensions;
-using WF.Data.Relational.Context;
-using WF.Data.Relational.Extensions;
+using WF.Data.Context;
+using WF.Data.Extensions;
 using WF.Mapper;
 using WF.Mapper.Extensions;
 

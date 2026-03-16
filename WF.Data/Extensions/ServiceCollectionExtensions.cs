@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
-using WF.Data.Relational.Context;
+using WF.Data.Context;
 
-namespace WF.Data.Relational.Extensions;
+namespace WF.Data.Extensions;
 
 public static class ServiceCollectionExtensions
 {

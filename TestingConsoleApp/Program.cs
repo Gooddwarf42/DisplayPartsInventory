@@ -1,7 +1,7 @@
 ﻿using Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using WF.Data.Relational.Context;
+using WF.Data.Context;
 
 namespace TestingConsoleApp;
 
