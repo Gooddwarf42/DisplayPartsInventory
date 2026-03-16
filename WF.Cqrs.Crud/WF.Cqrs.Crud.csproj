@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\WF.Cqrs\WF.Cqrs.csproj" />
+      <ProjectReference Include="..\WF.Data\WF.Data.csproj" />
+      <ProjectReference Include="..\WF.Domain\WF.Domain.csproj" />
+      <ProjectReference Include="..\WF.Mapper\WF.Mapper.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Domain\CreationDto.cs">
+        <DependentUpon>ICreationDto.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Domain\SummaryDto.cs">
+        <DependentUpon>ISummaryDto.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Domain\DetailDto.cs">
+        <DependentUpon>IDetailDto.cs</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+</Project>
