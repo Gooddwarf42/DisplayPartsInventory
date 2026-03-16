@@ -24,6 +24,7 @@ public class DefaultMediator(IServiceProvider serviceProvider, CqrsContext cqrsC
         // NOTE: we could restrict this to just ICommandHandler/QueryHandler/Whatever, but I don't think there is much to gain.
         var handlerInterfaceType = typeof(IOperationHandler<,>).MakeGenericType(operationType, resultType);
 
+        // TODO handle the case where IOperationHandler<Toperation, TResult> is such that TOperation has generic parameters.
         var handlerImplementationType = cqrsContext.HandlerTypes
                                             .SingleOrDefault(type => type.Extends(handlerInterfaceType))
                                         ?? throw new ArgumentOutOfRangeException(nameof(operation), $"Command {operationType.Name} has no {nameof(IOperationHandler)} registered.");

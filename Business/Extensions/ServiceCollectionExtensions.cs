@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using WF.Cqrs.Crud.Extensions;
 using WF.Cqrs.Extensions;
 using WF.Data.Context;
 using WF.Data.Extensions;
@@ -17,6 +18,8 @@ public static class ServiceCollectionExtensions
             .AddCqrs
             (
                 cqrsContext =>
-                    cqrsContext.AddAssembly(typeof(ServiceCollectionExtensions))
+                    cqrsContext
+                        .AddAssembly(typeof(ServiceCollectionExtensions))
+                        .AddCrud()
             );
 }

@@ -10,11 +10,11 @@ namespace WF.Cqrs.Crud.Business.Queries;
 
 public sealed record GetEntityQuery<TEntity, TDetailDto>(Guid Id) : IQuery<TDetailDto>
     where TEntity : BaseEntity
-    where TDetailDto : DetailDto;
+    where TDetailDto : class, IDetailDto;
 
 file sealed class GetEntityQueryHandler<TEntity, TDetailDto>(ApplicationDbContext dbContext, IMapper mapper) : IOperationHandler<GetEntityQuery<TEntity, TDetailDto>, TDetailDto>
     where TEntity : BaseEntity
-    where TDetailDto : DetailDto
+    where TDetailDto : class, IDetailDto
 {
     public async ValueTask<TDetailDto> HandleAsync(GetEntityQuery<TEntity, TDetailDto> operation, CancellationToken cancellationToken = default)
     {

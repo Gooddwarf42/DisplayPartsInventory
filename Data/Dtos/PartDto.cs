@@ -1,8 +1,9 @@
-﻿using WF.Domain.Dtos;
+﻿using WF.Cqrs.Crud.Domain;
+using WF.Domain.Dtos;
 
 namespace Data.Dtos;
 
-public record PartDtoSummary : BaseDto
+public record PartDtoSummary : SummaryDto, ICreationDto
 {
     public required string Type { get; set; } //TODO: make enum
     public required string Location { get; set; }
@@ -14,4 +15,4 @@ public record PartDtoSummary : BaseDto
     public string? Notes { get; set; }
 }
 
-public sealed record PartDto : PartDtoSummary;
+public sealed record PartDto : PartDtoSummary, IDetailDto;

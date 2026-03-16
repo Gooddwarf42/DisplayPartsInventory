@@ -9,11 +9,11 @@ namespace WF.Cqrs.Crud.Business.Commands;
 
 public sealed record UpdateEntityCommand<TEntity, TDetailDto>(Guid Id, TDetailDto DetailDto) : ICommand<Guid>
     where TEntity : BaseEntity
-    where TDetailDto : DetailDto;
+    where TDetailDto : class, IDetailDto;
 
 file sealed class UpdateEntityCommandHandler<TEntity, TDetailDto>(ApplicationDbContext dbContext, IMapper mapper) : IOperationHandler<UpdateEntityCommand<TEntity, TDetailDto>, Guid>
     where TEntity : BaseEntity
-    where TDetailDto : DetailDto
+    where TDetailDto : class, IDetailDto
 {
     public async ValueTask<Guid> HandleAsync(UpdateEntityCommand<TEntity, TDetailDto> operation, CancellationToken cancellationToken = default)
     {

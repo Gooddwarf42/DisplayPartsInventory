@@ -14,14 +14,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Update="Domain\CreationDto.cs">
-        <DependentUpon>ICreationDto.cs</DependentUpon>
-      </Compile>
       <Compile Update="Domain\SummaryDto.cs">
         <DependentUpon>ISummaryDto.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Domain\DetailDto.cs">
-        <DependentUpon>IDetailDto.cs</DependentUpon>
       </Compile>
     </ItemGroup>
 

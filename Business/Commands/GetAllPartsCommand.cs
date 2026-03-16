@@ -7,7 +7,7 @@ using WF.Data.Context;
 
 namespace Business.Commands;
 
-internal sealed class GetAllPartsCommand : ICommand<IEnumerable<PartDtoSummary>>;
+public sealed class GetAllPartsCommand : ICommand<IEnumerable<PartDtoSummary>>;
 
 internal sealed class GetAllPartsCommandHandler(ApplicationDbContext dbContext) : ICommandHandler<GetAllPartsCommand, IEnumerable<PartDtoSummary>>
 {

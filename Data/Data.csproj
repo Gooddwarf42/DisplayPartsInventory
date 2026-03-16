@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\WF.Cqrs.Crud\WF.Cqrs.Crud.csproj" />
         <ProjectReference Include="..\WF.Data\WF.Data.csproj" />
         <ProjectReference Include="..\WF.Domain\WF.Domain.csproj"/>
     </ItemGroup>

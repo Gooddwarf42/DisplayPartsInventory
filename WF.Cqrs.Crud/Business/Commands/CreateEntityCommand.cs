@@ -9,11 +9,11 @@ namespace WF.Cqrs.Crud.Business.Commands;
 
 public sealed record CreateEntityCommand<TEntity, TCreationDto>(TCreationDto CreationDto) : ICommand<Guid>
     where TEntity : BaseEntity
-    where TCreationDto : CreationDto;
+    where TCreationDto : class, ICreationDto;
 
 file sealed class CreateEntityCommandHandler<TEntity, TCreationDto>(ApplicationDbContext dbContext, IMapper mapper) : IOperationHandler<CreateEntityCommand<TEntity, TCreationDto>, Guid>
     where TEntity : BaseEntity
-    where TCreationDto : CreationDto
+    where TCreationDto : class, ICreationDto
 {
     public async ValueTask<Guid> HandleAsync(CreateEntityCommand<TEntity, TCreationDto> operation, CancellationToken cancellationToken = default)
     {
