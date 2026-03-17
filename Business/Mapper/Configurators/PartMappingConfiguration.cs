@@ -10,11 +10,24 @@ internal sealed class PartMappingConfiguration : MappingConfiguration<Part, Part
 {
     protected override void Configure(IMappingExpression<Part, PartDto> expression)
     {
-        expression.Bind(dto => dto.Size2, entity => entity.Size1 * 100);
+        expression.Bind(dto => dto.Size2, entity => entity.Size2 * 100);
     }
 
     protected override void Configure(IMappingExpression<PartDto, Part> expression)
     {
-        expression.Bind(entity => entity.Size2, dto => dto.Size1 / 100);
+        expression.Bind(entity => entity.Size2, dto => dto.Size2 / 100);
+    }
+}
+
+internal sealed class PartSummaryMappingConfiguration : MappingConfiguration<Part, PartDtoSummary>
+{
+    protected override void Configure(IMappingExpression<Part, PartDtoSummary> expression)
+    {
+        expression.Bind(dto => dto.Size2, entity => entity.Size2 * 100);
+    }
+
+    protected override void Configure(IMappingExpression<PartDtoSummary, Part> expression)
+    {
+        expression.Bind(entity => entity.Size2, dto => dto.Size2 / 100);
     }
 }

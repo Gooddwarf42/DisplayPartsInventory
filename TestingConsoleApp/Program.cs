@@ -1,4 +1,5 @@
-﻿using Business.Commands;
+﻿using AutoMapper;
+using Business.Commands;
 using Data.Dtos;
 using Data.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -43,6 +44,9 @@ internal class Program
             Size2 = 44,
             Type = "toco",
         };
+
+        var mapper = serviceProviderScope.ServiceProvider.GetRequiredService<IMapper>();
+        var barai = mapper.Map<Part>(partOne);
 
         var id = await mediator.RunAsync(new CreateEntityCommand<Part, PartDtoSummary>(partOne));
         Console.WriteLine($"created part one with id {id}");

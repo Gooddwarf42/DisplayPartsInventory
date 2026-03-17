@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using WF.Cqrs.Handlers;
@@ -8,6 +9,8 @@ namespace WF.Cqrs.Mediator;
 
 public class DefaultMediator(IServiceProvider serviceProvider, CqrsContext cqrsContext) : IMediator
 {
+    private static readonly ConcurrentDictionary<Type, Type> ImplementationTypes = new();
+
     public ValueTask<TResult> RunAsync<TResult>(ICommand<TResult> command, CancellationToken cancellationToken = default)
         => RunOperationAsync(command, cancellationToken);
 
@@ -33,12 +36,16 @@ public class DefaultMediator(IServiceProvider serviceProvider, CqrsContext cqrsC
 
     private Type GetHandlerImplementationType(Type operationType, Type resultType)
     {
+        if (ImplementationTypes.TryGetValue(operationType, out var cachedImplementationType))
+        {
+            return cachedImplementationType;
+        }
+
         if (!operationType.IsGenericType)
         {
             // NOTE: we could restrict this to just ICommandHandler/QueryHandler/Whatever, but I don't think there is much to gain.
             var handlerInterfaceType = typeof(IOperationHandler<,>).MakeGenericType(operationType, resultType);
 
-            // TODO handle the case where IOperationHandler<Toperation, TResult> is such that TOperation has generic parameters.
             var handlerImplementationType = cqrsContext.HandlerTypes
                                                 .Where(type => !type.IsGenericTypeDefinition)
                                                 .SingleOrDefault(type => type.Extends(handlerInterfaceType))
@@ -46,20 +53,62 @@ public class DefaultMediator(IServiceProvider serviceProvider, CqrsContext cqrsC
             return handlerImplementationType;
         }
 
-        var genericTypeDefinition = operationType.GetGenericTypeDefinition();
-        var genericTypeArguments = operationType.GenericTypeArguments;
-        var genericTypeParameters = ((TypeInfo)genericTypeDefinition).GenericTypeParameters; 
+        var operationGenericTypeDefinition = operationType.GetGenericTypeDefinition();
+        var operationGenericTypeArguments = operationType.GenericTypeArguments;
 
-        var sketchyHandlerInterfaceType = typeof(IOperationHandler<,>).MakeGenericType(genericTypeDefinition.MakeGenericType(genericTypeParameters), resultType);
-
-        // TODO the IsAssignableFrom method does not work with generic type definitions, so we have to look at the implemented interfaces manually
         var genericHandlerImplementationType = cqrsContext.HandlerTypes
                                                    .Where(type => type.IsGenericTypeDefinition)
-                                                   .SingleOrDefault(type => type.Extends(sketchyHandlerInterfaceType))
+                                                   .SingleOrDefault(MatchesGenericHandlerType)
                                                ?? throw new ArgumentOutOfRangeException(nameof(operationType), $"Command {operationType.Name} has no {nameof(IOperationHandler)} registered.");
-        
+
         // TODO this relies on generics being in the same order in the Handler and the Operation. We should definitely improve this...
-        return genericHandlerImplementationType.MakeGenericType(genericTypeArguments);
+        var implementationType = genericHandlerImplementationType.MakeGenericType(operationGenericTypeArguments);
+
+        ImplementationTypes.TryAdd(operationType, implementationType);
+
+        return implementationType;
+
+        bool MatchesGenericHandlerType(Type type)
+        {
+            var interfaces = type.GetInterfaces();
+            var theInterface = interfaces
+                .Single(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IOperationHandler<,>));
+
+            var interfaceTypeArguments = theInterface.GenericTypeArguments;
+            var handlerOperationTypeArgument = interfaceTypeArguments[0];
+            var handlerResultTypeArgument = interfaceTypeArguments[1];
+
+            if (operationGenericTypeDefinition != handlerOperationTypeArgument.GetGenericTypeDefinition())
+            {
+                return false;
+            }
+
+            // We also need to check if the return type matches
+            if (!resultType.IsGenericType)
+            {
+                if (handlerResultTypeArgument.IsGenericType)
+                {
+                    return false;
+                }
+
+                // This takes care of the case where the operation result is one of the generic arguments of the operation.
+                if (handlerResultTypeArgument.IsGenericTypeParameter)
+                {
+                    return handlerResultTypeArgument.GenericParameterPosition >= operationGenericTypeArguments.Length
+                        ? false
+                        : operationGenericTypeArguments[handlerResultTypeArgument.GenericParameterPosition] == resultType;
+                }
+
+                return handlerResultTypeArgument == resultType;
+            }
+
+            // suppose it it List<PartSummaryDto> and the handler has a List<TSummaryDto> as return type
+            var resultTypeGenericDefinition = resultType.GetGenericTypeDefinition(); // List<>
+            var handlerResultTypeGenericDefinition = handlerResultTypeArgument.GetGenericTypeDefinition();
+
+            // TODO I'll keep it simple for now. Should cover 99% of use cases, and only fail in some horrid ill maliciously formed OperationHandlers
+            return handlerResultTypeGenericDefinition == resultTypeGenericDefinition;
+        }
     }
 
     private IBaseOperationHandler<TResult> ApplyDecorators<TResult>(IBaseOperationHandler<TResult> handler, Type operationType)
