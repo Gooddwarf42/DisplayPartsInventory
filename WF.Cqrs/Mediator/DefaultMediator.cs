@@ -21,13 +21,7 @@ public class DefaultMediator(IServiceProvider serviceProvider, CqrsContext cqrsC
     {
         var operationType = operation.GetType();
         var resultType = typeof(TResult);
-        // NOTE: we could restrict this to just ICommandHandler/QueryHandler/Whatever, but I don't think there is much to gain.
-        var handlerInterfaceType = typeof(IOperationHandler<,>).MakeGenericType(operationType, resultType);
-
-        // TODO handle the case where IOperationHandler<Toperation, TResult> is such that TOperation has generic parameters.
-        var handlerImplementationType = cqrsContext.HandlerTypes
-                                            .SingleOrDefault(type => type.Extends(handlerInterfaceType))
-                                        ?? throw new ArgumentOutOfRangeException(nameof(operation), $"Command {operationType.Name} has no {nameof(IOperationHandler)} registered.");
+        var handlerImplementationType = GetHandlerImplementationType(operationType, resultType);
 
         var handler = (IBaseOperationHandler<TResult>)serviceProvider.GetRequiredService(handlerImplementationType);
 
@@ -35,6 +29,37 @@ public class DefaultMediator(IServiceProvider serviceProvider, CqrsContext cqrsC
         handler = ApplyDecorators(handler, operationType);
 
         return handler.HandleAsync(operation, cancellationToken);
+    }
+
+    private Type GetHandlerImplementationType(Type operationType, Type resultType)
+    {
+        if (!operationType.IsGenericType)
+        {
+            // NOTE: we could restrict this to just ICommandHandler/QueryHandler/Whatever, but I don't think there is much to gain.
+            var handlerInterfaceType = typeof(IOperationHandler<,>).MakeGenericType(operationType, resultType);
+
+            // TODO handle the case where IOperationHandler<Toperation, TResult> is such that TOperation has generic parameters.
+            var handlerImplementationType = cqrsContext.HandlerTypes
+                                                .Where(type => !type.IsGenericTypeDefinition)
+                                                .SingleOrDefault(type => type.Extends(handlerInterfaceType))
+                                            ?? throw new ArgumentOutOfRangeException(nameof(operationType), $"Command {operationType.Name} has no {nameof(IOperationHandler)} registered.");
+            return handlerImplementationType;
+        }
+
+        var genericTypeDefinition = operationType.GetGenericTypeDefinition();
+        var genericTypeArguments = operationType.GenericTypeArguments;
+        var genericTypeParameters = ((TypeInfo)genericTypeDefinition).GenericTypeParameters; 
+
+        var sketchyHandlerInterfaceType = typeof(IOperationHandler<,>).MakeGenericType(genericTypeDefinition.MakeGenericType(genericTypeParameters), resultType);
+
+        // TODO the IsAssignableFrom method does not work with generic type definitions, so we have to look at the implemented interfaces manually
+        var genericHandlerImplementationType = cqrsContext.HandlerTypes
+                                                   .Where(type => type.IsGenericTypeDefinition)
+                                                   .SingleOrDefault(type => type.Extends(sketchyHandlerInterfaceType))
+                                               ?? throw new ArgumentOutOfRangeException(nameof(operationType), $"Command {operationType.Name} has no {nameof(IOperationHandler)} registered.");
+        
+        // TODO this relies on generics being in the same order in the Handler and the Operation. We should definitely improve this...
+        return genericHandlerImplementationType.MakeGenericType(genericTypeArguments);
     }
 
     private IBaseOperationHandler<TResult> ApplyDecorators<TResult>(IBaseOperationHandler<TResult> handler, Type operationType)
