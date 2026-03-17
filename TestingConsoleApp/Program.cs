@@ -27,14 +27,6 @@ internal class Program
         await dbContext.Database.EnsureCreatedAsync();
         
         var mediator = serviceProviderScope.ServiceProvider.GetRequiredService<IMediator>();
-
-        var gigione = await mediator.RunAsync(new GetAllPartsCommand());
-        Console.WriteLine("retrieved all parts with the simple command");
-        foreach (var gigi in gigione)
-        {
-            Console.WriteLine(gigi);
-        }
-        
         
         var partOne = new PartDtoSummary()
         {
