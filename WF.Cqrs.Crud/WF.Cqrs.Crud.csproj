@@ -14,7 +14,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Update="Domain\SummaryDto.cs">
+      <Compile Update="Domain\BaseSummaryDto.cs">
         <DependentUpon>ISummaryDto.cs</DependentUpon>
       </Compile>
     </ItemGroup>

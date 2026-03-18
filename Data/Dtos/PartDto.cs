@@ -3,7 +3,7 @@ using WF.Domain.Dtos;
 
 namespace Data.Dtos;
 
-public record PartDtoSummary : SummaryDto, ICreationDto
+public record PartDtoSummary : BaseSummaryDto, ICreationDto
 {
     public required string Type { get; set; } //TODO: make enum
     public required string Location { get; set; }

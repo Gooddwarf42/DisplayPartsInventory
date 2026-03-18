@@ -11,11 +11,11 @@ namespace WF.Cqrs.Crud.Business.Queries;
 
 public sealed record GetEntitiesQuery<TEntity, TSummaryDto>(Expression<Func<TEntity, bool>>? Filter = null) : IQuery<List<TSummaryDto>>
     where TEntity : BaseEntity
-    where TSummaryDto : SummaryDto;
+    where TSummaryDto : BaseSummaryDto;
 
 file sealed class GetEntitiesQueryHandler<TEntity, TSummaryDto>(ApplicationDbContext dbContext, IMapper mapper) : IOperationHandler<GetEntitiesQuery<TEntity, TSummaryDto>, List<TSummaryDto>>
     where TEntity : BaseEntity
-    where TSummaryDto : SummaryDto
+    where TSummaryDto : BaseSummaryDto
 {
     public ValueTask<List<TSummaryDto>> HandleAsync(GetEntitiesQuery<TEntity, TSummaryDto> operation, CancellationToken cancellationToken = default)
     {
