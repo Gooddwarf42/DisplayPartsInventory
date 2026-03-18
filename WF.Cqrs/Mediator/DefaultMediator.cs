@@ -1,14 +1,14 @@
 using System.Collections.Concurrent;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
+using WF.Cqrs.Extensions;
 using WF.Cqrs.Handlers;
 using WF.Cqrs.Operations;
-using WF.Cqrs.Services;
 using WF.Utils.Extensions;
 
 namespace WF.Cqrs.Mediator;
 
-public class DefaultMediator(IServiceProvider serviceProvider, CqrsContext cqrsContext, OperationHandlerResolver operationHandlerResolver) : IMediator
+public class DefaultMediator(IServiceProvider serviceProvider, CqrsContext cqrsContext) : IMediator
 {
     private static readonly ConcurrentDictionary<Type, Type> ImplementationTypes = new();
 
@@ -41,7 +41,7 @@ public class DefaultMediator(IServiceProvider serviceProvider, CqrsContext cqrsC
             return cachedImplementationType;
         }
 
-        var implementationType = operationHandlerResolver.GetOperationHandlerImplementationType(operationType, cqrsContext.HandlerTypes);
+        var implementationType = operationType.GetOperationHandlerImplementationType(cqrsContext.HandlerTypes);
         ImplementationTypes.TryAdd(operationType, implementationType);
         return implementationType;
     }

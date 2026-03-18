@@ -3,12 +3,11 @@ using WF.Cqrs.Handlers;
 using WF.Cqrs.Operations;
 using WF.Utils.Extensions;
 
-namespace WF.Cqrs.Services;
+namespace WF.Cqrs.Extensions;
 
-// Mi piacerebbe che non fosse public, vorrei più o meno nasconderlo...
-public sealed class OperationHandlerResolver
+internal static class TypeExtensions
 {
-    public Type GetOperationHandlerImplementationType(Type operationType, IEnumerable<Type> handlerCollection)
+    public static Type GetOperationHandlerImplementationType(this Type operationType, IEnumerable<Type> handlerCollection)
     {
         if (!operationType.Extends<IBaseOperation>())
         {

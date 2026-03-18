@@ -1,6 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
 using WF.Cqrs.Mediator;
-using WF.Cqrs.Services;
 
 namespace WF.Cqrs.Extensions;
 
@@ -13,7 +12,6 @@ public static class ServiceCollectionExtensions
 
         services.AddTransient(typeof(IMediator), cqrsContext.MediatorType);
         services.AddSingleton(cqrsContext); //I need this to inject the cqrs configuration into the mediator
-        services.AddTransient<OperationHandlerResolver>(); // and this to resolve handlers in the defaultMediator
         cqrsContext.ScanAssemblies();
 
         foreach (var handlerType in cqrsContext.HandlerTypes)

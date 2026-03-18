@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using WF.Cqrs.Decorator;
 using WF.Cqrs.Handlers;
 using WF.Cqrs.Operations;
-using WF.Cqrs.Tests.Services;
 
 namespace WF.Cqrs.Tests.SampleDecorators;
 

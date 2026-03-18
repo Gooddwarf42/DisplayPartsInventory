@@ -1,26 +1,22 @@
 using System;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
-using WF.Cqrs.Decorator;
 using WF.Cqrs.Extensions;
-using WF.Cqrs.Services;
 using WF.Cqrs.Tests.Mediator;
-using WF.Cqrs.Tests.SampleDecorators;
 using WF.Cqrs.Tests.SampleOperations.Commands;
 using WF.Cqrs.Tests.SampleOperations.Events;
 using WF.Cqrs.Tests.SampleOperations.Queries;
 using Xunit;
 
-namespace WF.Cqrs.Tests.Services;
+namespace WF.Cqrs.Tests.Extensions;
 
-[TestSubject(typeof(OperationHandlerResolver))]
-public class OperationHandlerResolverTest : IDisposable
+[TestSubject(typeof(TypeExtensions))]
+public class TypeExtensionsTest : IDisposable
 {
     private readonly IServiceScope _scope;
     private readonly CqrsContext _cqrsContext;
-    private readonly OperationHandlerResolver _operationHandlerResolver;
 
-    public OperationHandlerResolverTest()
+    public TypeExtensionsTest()
     {
         // Initialize ServiceCollection
         var serviceCollection = new ServiceCollection();
@@ -28,10 +24,9 @@ public class OperationHandlerResolverTest : IDisposable
         serviceCollection.AddScoped<TestTracesService>();
 
         serviceCollection.AddCqrs
-        (context => context
-            .AddAssembly(typeof(DefaultMediatorTest))
-            .AddDecorator(typeof(AppendADecorator<,>), 0)
-            .AddDecorator(typeof(AppendBDecorator<,>), 1, DecorationFilters.IsCommand())
+        (
+            context => context
+                .AddAssembly(typeof(DefaultMediatorTest))
         );
 
         // create a service provider scope for this test class
@@ -39,7 +34,6 @@ public class OperationHandlerResolverTest : IDisposable
         _scope = rootServiceProvider.CreateScope();
         var serviceProvider = _scope.ServiceProvider;
         serviceProvider.GetRequiredService<TestTracesService>();
-        _operationHandlerResolver = serviceProvider.GetRequiredService<OperationHandlerResolver>();
         _cqrsContext = serviceProvider.GetRequiredService<CqrsContext>();
     }
 
@@ -61,7 +55,7 @@ public class OperationHandlerResolverTest : IDisposable
     [InlineData(typeof(MyCommand<char, float>), typeof(MyCommandHandler<float>))]
     public void ResolvesCorrectHandler(Type operationType, Type expectedHandlerType)
     {
-        var actualHandlerType = _operationHandlerResolver.GetOperationHandlerImplementationType(operationType, _cqrsContext.HandlerTypes);
+        var actualHandlerType = operationType.GetOperationHandlerImplementationType(_cqrsContext.HandlerTypes);
         Assert.Equal(expectedHandlerType, actualHandlerType);
     }
 }
