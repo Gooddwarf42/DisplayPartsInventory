@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace WF.Cqrs.Tests.Services;
+namespace WF.Cqrs.Tests;
 
 internal sealed class TestTracesService
 {

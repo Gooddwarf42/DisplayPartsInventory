@@ -65,3 +65,15 @@ internal sealed class HarderCaseCommandHandler<S, T> : IOperationHandler<HarderC
 }
 
 #endregion
+
+#region AN EXAMPLE DETAILED IN THE COMMENTS
+
+internal sealed class MyCommand<T, S> : ICommand<S>;
+
+internal sealed class MyCommandHandler<U> : IOperationHandler<MyCommand<int, U>, U>
+{
+    public ValueTask<U> HandleAsync(MyCommand<int, U> operation, CancellationToken cancellationToken = default)
+        => throw new System.NotImplementedException();
+}
+
+#endregion

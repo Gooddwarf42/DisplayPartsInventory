@@ -25,6 +25,9 @@
         <Compile Update="Handlers\IEventHandler.cs">
             <DependentUpon>IOperationHandler.cs</DependentUpon>
         </Compile>
+        <Compile Update="Mediator\DefaultMediator.cs">
+          <DependentUpon>IMediator.cs</DependentUpon>
+        </Compile>
     </ItemGroup>
 
     <ItemGroup>
