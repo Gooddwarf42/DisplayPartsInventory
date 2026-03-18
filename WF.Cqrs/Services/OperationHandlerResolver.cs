@@ -101,13 +101,6 @@ public sealed class OperationHandlerResolver
         return operationInterface.GenericTypeArguments[0];
     }
 
-    private static bool HandlerTypeMatchesGenericOperationDefinition(Type handlerType, Type genericOperationDefinition)
-    {
-        var handlerOperationTypeArgument = GetHandlerOperationTypeArgument(handlerType);
-
-        return genericOperationDefinition == handlerOperationTypeArgument.GetGenericTypeDefinition();
-    }
-
     private static Type GetHandlerOperationTypeArgument(Type handlerType)
     {
         var interfaces = handlerType.GetInterfaces();
