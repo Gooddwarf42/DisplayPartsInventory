@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\WF.Cqrs\WF.Cqrs.csproj" />
+      <ProjectReference Include="..\WF.Data\WF.Data.csproj" />
+      <ProjectReference Include="..\WF.Domain\WF.Domain.csproj" />
+      <ProjectReference Include="..\WF.Mapper\WF.Mapper.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Domain\BaseSummaryDto.cs">
+        <DependentUpon>ISummaryDto.cs</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+</Project>

@@ -1,16 +1,18 @@
-﻿using Data.Dtos.Abstractions;
+﻿using WF.Cqrs.Crud.Domain;
+using WF.Domain.Dtos;
 
 namespace Data.Dtos;
 
-public record PartDtoSummary : BaseDto
+public record PartDtoSummary : BaseSummaryDto, ICreationDto
 {
     public required string Type { get; set; } //TODO: make enum
     public required string Location { get; set; }
     public required int Quantity { get; set; }
+
     // ReSharper disable once PropertyCanBeMadeInitOnly.Global
     public required decimal Size1 { get; set; }
     public decimal? Size2 { get; set; }
     public string? Notes { get; set; }
 }
 
-public sealed record PartDto : PartDtoSummary;
+public sealed record PartDto : PartDtoSummary, IDetailDto;

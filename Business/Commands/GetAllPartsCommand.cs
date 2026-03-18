@@ -1,13 +1,13 @@
-using Cqrs.Handlers;
-using Cqrs.Operations;
 using Data.Dtos;
 using Data.Entities;
-using Data.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using WF.Cqrs.Handlers;
+using WF.Cqrs.Operations;
+using WF.Data.Context;
 
 namespace Business.Commands;
 
-internal sealed class GetAllPartsCommand : ICommand<IEnumerable<PartDtoSummary>>;
+public sealed class GetAllPartsCommand : ICommand<IEnumerable<PartDtoSummary>>;
 
 internal sealed class GetAllPartsCommandHandler(ApplicationDbContext dbContext) : ICommandHandler<GetAllPartsCommand, IEnumerable<PartDtoSummary>>
 {

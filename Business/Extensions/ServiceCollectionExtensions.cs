@@ -1,22 +1,25 @@
-using Cqrs.Extensions;
-using Data.Extensions;
-using Data.Infrastructure;
-using Mapper;
-using Mapper.Extensions;
 using Microsoft.Extensions.DependencyInjection;
+using WF.Cqrs.Crud.Extensions;
+using WF.Cqrs.Extensions;
+using WF.Data.Context;
+using WF.Data.Extensions;
+using WF.Mapper;
+using WF.Mapper.Extensions;
 
 namespace Business.Extensions;
 
 public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddBusiness<TConfigureDbContext>(this IServiceCollection services)
-        where TConfigureDbContext : class, IConfigureDbContext
+        where TConfigureDbContext : class, IDbContextConfigurator
         => services
             .AddData<TConfigureDbContext>()
             .AddMapper<DefaultMapper>(typeof(ServiceCollectionExtensions))
             .AddCqrs
             (
                 cqrsContext =>
-                    cqrsContext.AddAssembly(typeof(ServiceCollectionExtensions))
+                    cqrsContext
+                        .AddAssembly(typeof(ServiceCollectionExtensions))
+                        .AddCrud()
             );
 }
