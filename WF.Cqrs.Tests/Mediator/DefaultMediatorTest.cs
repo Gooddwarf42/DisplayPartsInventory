@@ -142,4 +142,22 @@ public class DefaultMediatorTest : IDisposable
         // Assert
         Assert.Equal(expectedTestString, string.Join("", _tracesService.TestCharacterList));
     }
+
+    [Theory]
+    [InlineData(typeof(AddNumbersCommand), typeof(int), typeof(AddNumbersCommandHandler))]
+    [InlineData(typeof(IncrementNumberCommand), typeof(Empty), typeof(IncrementNumberCommandHandler))]
+    [InlineData(typeof(GetAnswerQuery), typeof(int), typeof(GetAnswerQueryHandler))]
+    [InlineData(typeof(SampleEvent), typeof(Empty), typeof(SampleEventHandler))]
+    [InlineData(typeof(GenericWithFixedReturnTypeCommand<float>), typeof(int), typeof(GenericWithFixedReturnTypeCommandHandler<float>))]
+    [InlineData(typeof(GenericWithTypeParameterAsReturnTypeCommand<float>), typeof(float), typeof(GenericWithTypeParameterAsReturnTypeCommandHandler<float>))]
+    [InlineData(typeof(GenericWithClosedGenericAsReturnTypeCommand<float>), typeof(List<int>), typeof(GenericWithClosedGenericAsReturnTypeCommandHandler<float>))]
+    [InlineData(typeof(GenericWithClosedGenericUsingTypeParametersAsReturnTypeCommand<float>), typeof(List<float>), typeof(GenericWithClosedGenericUsingTypeParametersAsReturnTypeCommandHandler<float>))]
+    [InlineData(typeof(HarderCaseCommand<float, char>), typeof(List<char>), typeof(HarderCaseCommandHandler<char, float>))]
+    public void ResolvesCorrectHandler(Type operationType, Type resultType, Type expectedHandlerType)
+    {
+        // This is not great, I really should refactor the method itself...
+        // result type should be extracted from the operation type...
+        var actualHandlerType = _mediator.GetHandlerImplementationType(operationType, resultType);
+        Assert.Equal(expectedHandlerType, actualHandlerType);
+    }
 }

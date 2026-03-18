@@ -25,7 +25,7 @@ public class ServiceCollectionExtensionsTest
                 .AddAssembly(typeof(ServiceCollectionExtensionsTest))
                 .AddDecorator(typeof(TestDecorator<,>), 0);
 
-        const int expectedHandlers = 4;
+        const int expectedHandlers = 9;
         const int expectedDecorators = 1;
         var expectedMediatorType = typeof(DefaultMediator);
 

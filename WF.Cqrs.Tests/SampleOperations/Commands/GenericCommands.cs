@@ -8,11 +8,11 @@ namespace WF.Cqrs.Tests.SampleOperations.Commands;
 
 #region FIXED RETURN TYPE
 
-internal sealed class GenericCommandWithFixedReturnTypeCommand<T> : ICommand<int>;
+internal sealed class GenericWithFixedReturnTypeCommand<T> : ICommand<int>;
 
-internal sealed class GenericCommandWithFixedReturnTypeCommandHandler<T> : IOperationHandler<GenericCommandWithFixedReturnTypeCommand<T>, int>
+internal sealed class GenericWithFixedReturnTypeCommandHandler<T> : IOperationHandler<GenericWithFixedReturnTypeCommand<T>, int>
 {
-    public ValueTask<int> HandleAsync(GenericCommandWithFixedReturnTypeCommand<T> operation, CancellationToken cancellationToken = default)
+    public ValueTask<int> HandleAsync(GenericWithFixedReturnTypeCommand<T> operation, CancellationToken cancellationToken = default)
         => throw new System.NotImplementedException();
 }
 
@@ -20,11 +20,11 @@ internal sealed class GenericCommandWithFixedReturnTypeCommandHandler<T> : IOper
 
 #region TYPE PARAMETER AS RETURN TYPE
 
-internal sealed class GenericCommandWithTypeParameterAsReturnTypeCommand<T> : ICommand<T>;
+internal sealed class GenericWithTypeParameterAsReturnTypeCommand<T> : ICommand<T>;
 
-internal sealed class GenericCommandWithTypeParameterAsReturnTypeCommandHandler<T> : IOperationHandler<GenericCommandWithTypeParameterAsReturnTypeCommand<T>, T>
+internal sealed class GenericWithTypeParameterAsReturnTypeCommandHandler<T> : IOperationHandler<GenericWithTypeParameterAsReturnTypeCommand<T>, T>
 {
-    public ValueTask<T> HandleAsync(GenericCommandWithTypeParameterAsReturnTypeCommand<T> operation, CancellationToken cancellationToken = default)
+    public ValueTask<T> HandleAsync(GenericWithTypeParameterAsReturnTypeCommand<T> operation, CancellationToken cancellationToken = default)
         => throw new System.NotImplementedException();
 }
 
@@ -32,11 +32,11 @@ internal sealed class GenericCommandWithTypeParameterAsReturnTypeCommandHandler<
 
 #region CLOSED GENERIC AS RETURN TYPE
 
-internal sealed class GenericCommandWithClosedGenericAsReturnTypeCommand<T> : ICommand<List<int>>;
+internal sealed class GenericWithClosedGenericAsReturnTypeCommand<T> : ICommand<List<int>>;
 
-internal sealed class GenericCommandWithClosedGenericAsReturnTypeCommandHandler<T> : IOperationHandler<GenericCommandWithClosedGenericAsReturnTypeCommand<T>, List<int>>
+internal sealed class GenericWithClosedGenericAsReturnTypeCommandHandler<T> : IOperationHandler<GenericWithClosedGenericAsReturnTypeCommand<T>, List<int>>
 {
-    public ValueTask<List<int>> HandleAsync(GenericCommandWithClosedGenericAsReturnTypeCommand<T> operation, CancellationToken cancellationToken = default)
+    public ValueTask<List<int>> HandleAsync(GenericWithClosedGenericAsReturnTypeCommand<T> operation, CancellationToken cancellationToken = default)
         => throw new System.NotImplementedException();
 }
 
@@ -44,11 +44,11 @@ internal sealed class GenericCommandWithClosedGenericAsReturnTypeCommandHandler<
 
 #region CLOSED GENERIC WITH TYPE ARGUMENT AS RETURN TYPE
 
-internal sealed class GenericCommandWithClosedGenericUsingTypeParametersAsReturnTypeCommand<T> : ICommand<List<T>>;
+internal sealed class GenericWithClosedGenericUsingTypeParametersAsReturnTypeCommand<T> : ICommand<List<T>>;
 
-internal sealed class GenericCommandWithClosedGenericUsingTypeParametersAsReturnTypeCommandHandler<T> : IOperationHandler<GenericCommandWithClosedGenericUsingTypeParametersAsReturnTypeCommand<T>, List<T>>
+internal sealed class GenericWithClosedGenericUsingTypeParametersAsReturnTypeCommandHandler<T> : IOperationHandler<GenericWithClosedGenericUsingTypeParametersAsReturnTypeCommand<T>, List<T>>
 {
-    public ValueTask<List<T>> HandleAsync(GenericCommandWithClosedGenericUsingTypeParametersAsReturnTypeCommand<T> operation, CancellationToken cancellationToken = default)
+    public ValueTask<List<T>> HandleAsync(GenericWithClosedGenericUsingTypeParametersAsReturnTypeCommand<T> operation, CancellationToken cancellationToken = default)
         => throw new System.NotImplementedException();
 }
 

@@ -34,7 +34,10 @@ public class DefaultMediator(IServiceProvider serviceProvider, CqrsContext cqrsC
         return handler.HandleAsync(operation, cancellationToken);
     }
 
-    private Type GetHandlerImplementationType(Type operationType, Type resultType)
+    // TODO this probably should not be private. But I want to have it tested...
+    // For now I'll put it as internal, so I can test it.
+    // Consider refactoring this at some point. Or extracting this.
+    internal Type GetHandlerImplementationType(Type operationType, Type resultType)
     {
         if (ImplementationTypes.TryGetValue(operationType, out var cachedImplementationType))
         {

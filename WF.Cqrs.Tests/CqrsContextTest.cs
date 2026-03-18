@@ -51,13 +51,18 @@ public class CqrsContextTest
         // Arrange
         var cqrsContext = new CqrsContext();
 
-        const int expectedHandlerCount = 4;
+        const int expectedHandlerCount = 9;
         List<Type> expectedHandlerTypes =
         [
             typeof(AddNumbersCommandHandler),
             typeof(IncrementNumberCommandHandler),
             typeof(GetAnswerQueryHandler),
             typeof(SampleEventHandler),
+            typeof(GenericWithFixedReturnTypeCommandHandler<>),
+            typeof(GenericWithTypeParameterAsReturnTypeCommandHandler<>),
+            typeof(GenericWithClosedGenericAsReturnTypeCommandHandler<>),
+            typeof(GenericWithClosedGenericUsingTypeParametersAsReturnTypeCommandHandler<>),
+            typeof(HarderCaseCommandHandler<,>),
         ];
         SortHandlers(expectedHandlerTypes);
 
