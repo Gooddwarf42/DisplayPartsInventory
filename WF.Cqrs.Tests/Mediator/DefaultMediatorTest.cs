@@ -1,17 +1,16 @@
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using WF.Cqrs.Decorator;
 using WF.Cqrs.Extensions;
-using WF.Cqrs.Handlers;
 using WF.Cqrs.Mediator;
-using WF.Cqrs.Operations;
+using WF.Cqrs.Tests.SampleDecorators;
 using WF.Cqrs.Tests.SampleOperations.Commands;
 using WF.Cqrs.Tests.SampleOperations.Events;
 using WF.Cqrs.Tests.SampleOperations.Queries;
+using WF.Cqrs.Tests.Services;
 using Xunit;
 
 namespace WF.Cqrs.Tests.Mediator;
@@ -19,29 +18,31 @@ namespace WF.Cqrs.Tests.Mediator;
 [TestSubject(typeof(DefaultMediator))]
 public class DefaultMediatorTest : IDisposable
 {
-    private static readonly List<char> TestCharacterList = [];
     private readonly DefaultMediator _mediator;
     private readonly IServiceScope _scope;
+    private readonly TestTracesService _tracesService;
 
     public DefaultMediatorTest()
     {
         // Initialize ServiceCollection
         var serviceCollection = new ServiceCollection();
+
+        serviceCollection.AddScoped<TestTracesService>();
+
         serviceCollection.AddCqrs
-        (
-            context => context
-                .AddAssembly(typeof(DefaultMediatorTest))
-                .AddDecorator(typeof(AppendADecorator<,>), 0)
-                .AddDecorator(typeof(AppendBDecorator<,>), 1, DecorationFilters.IsCommand())
+        (context => context
+            .AddAssembly(typeof(DefaultMediatorTest))
+            .AddDecorator(typeof(AppendADecorator<,>), 0)
+            .AddDecorator(typeof(AppendBDecorator<,>), 1, DecorationFilters.IsCommand())
         );
 
         // create a service provider scope for this test class
         var rootServiceProvider = serviceCollection.BuildServiceProvider();
         _scope = rootServiceProvider.CreateScope();
         var serviceProvider = _scope.ServiceProvider;
-        _mediator = (DefaultMediator)serviceProvider.GetRequiredService<IMediator>();
+        _mediator = (DefaultMediator) serviceProvider.GetRequiredService<IMediator>();
+        _tracesService = serviceProvider.GetRequiredService<TestTracesService>();
     }
-
 
     public void Dispose()
     {
@@ -98,7 +99,12 @@ public class DefaultMediatorTest : IDisposable
     {
         // Arrange
         var testNumber = 4;
-        var sampleEvent = new SampleEvent(() => { testNumber++; });
+
+        var sampleEvent = new SampleEvent(() =>
+        {
+            testNumber++;
+        });
+
         const int expectedResult = 5;
 
         // Act
@@ -120,7 +126,7 @@ public class DefaultMediatorTest : IDisposable
         await _mediator.RunAsync(command);
 
         // Assert
-        Assert.Equal(expectedTestString, string.Join("", TestCharacterList));
+        Assert.Equal(expectedTestString, string.Join("", _tracesService.TestCharacterList));
     }
 
     [Fact]
@@ -134,24 +140,6 @@ public class DefaultMediatorTest : IDisposable
         await _mediator.RunAsync(query);
 
         // Assert
-        Assert.Equal(expectedTestString, string.Join("", TestCharacterList));
-    }
-
-    private class AppendADecorator<TOperation, TResult>(IOperationHandler<TOperation, TResult> decoratee) : BaseDecorator<TOperation, TResult>(decoratee) where TOperation : IOperation<TResult>
-    {
-        protected override ValueTask<TResult> DecorateAsync(IOperationHandler<TOperation, TResult> decoratee, TOperation operation, CancellationToken cancellationToken)
-        {
-            TestCharacterList.Add('A');
-            return decoratee.HandleAsync(operation, cancellationToken);
-        }
-    }
-
-    private class AppendBDecorator<TOperation, TResult>(IOperationHandler<TOperation, TResult> decoratee) : BaseDecorator<TOperation, TResult>(decoratee) where TOperation : IOperation<TResult>
-    {
-        protected override ValueTask<TResult> DecorateAsync(IOperationHandler<TOperation, TResult> decoratee, TOperation operation, CancellationToken cancellationToken)
-        {
-            TestCharacterList.Add('B');
-            return decoratee.HandleAsync(operation, cancellationToken);
-        }
+        Assert.Equal(expectedTestString, string.Join("", _tracesService.TestCharacterList));
     }
 }
